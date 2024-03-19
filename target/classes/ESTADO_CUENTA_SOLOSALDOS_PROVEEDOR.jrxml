@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ESTADO_DE_CUENTA_PROVEEDOR" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2470d0b8-8d7b-4511-98d1-ca74b94f551e">
+	<property name="ireport.zoom" value="1.6105100000000052"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="39"/>
+	<parameter name="cliente" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    DENSE_RANK() OVER (ORDER BY F.ID_ORDENCOMPRA) AS N,
+    F.ID_ORDENCOMPRA, 
+    F.NFACTURA, 
+    F.FECHA_INGRESO, 
+    P.PROVEEDOR, PA.PAIS,
+    CASE 
+        WHEN F.SALDO > 0 THEN DATEDIFF(CURRENT_DATE, F.FECHA_INGRESO)
+        ELSE DATEDIFF(COALESCE(LAST_PAGO.FECHA, F.FECHA_INGRESO),F.FECHA_INGRESO)
+    END AS DIAS_FACTURA,
+    DATEDIFF(COALESCE(R.FECHA, F.FECHA_INGRESO), F.FECHA_INGRESO) AS DIAS_RECIBO,
+    F.TOTAL_LEMP, 
+    F.SALDO, 
+    COM.IMG,
+    COM.COMPANY, 
+    
+    R.NUMERO_RECIBO, 
+    R.FECHA, 
+    DR.ABONO,
+(SELECT COALESCE(SUM(ORDENCOMPRA.saldo),0.00) AS SALDO_VENCIDO FROM ORDENCOMPRA INNER JOIN PROVEEDOR ON ORDENCOMPRA.ID_PROVEEDOR=PROVEEDOR.IDPROVEEDOR WHERE ORDENCOMPRA.ID_PROVEEDOR=$P!{cliente} AND ORDENCOMPRA.CIA=$P!{CIA}) as saldo_total,
+(SELECT COALESCE(SUM(saldo),0.00) AS SALDO_VENCIDO FROM ORDENCOMPRA  WHERE DATEDIFF(CURRENT_DATE(), FECHA_INGRESO)>PLAZO AND ID_PROVEEDOR=$P!{cliente} AND CIA=$P!{CIA}) as saldo_vencido,
+(SELECT COALESCE(SUM(saldo),0.00) AS SALDO_VENCIDO FROM ORDENCOMPRA  WHERE DATEDIFF(CURRENT_DATE(), FECHA_INGRESO)<=PLAZO AND ID_PROVEEDOR=$P!{cliente} AND CIA=$P!{CIA}) as saldo_novencido,
+(SELECT COALESCE(SUM(saldo),0.00) AS SALDO_VENCIDO FROM ORDENCOMPRA  WHERE DATEDIFF(CURRENT_DATE(), FECHA_INGRESO )between 0 and 30 AND ID_PROVEEDOR=$P!{cliente} AND CIA=$P!{CIA}) as saldoa30,
+(SELECT COALESCE(SUM(saldo),0.00) AS SALDO_VENCIDO FROM ORDENCOMPRA  WHERE DATEDIFF(CURRENT_DATE(), FECHA_INGRESO )between 31 and 45 AND ID_PROVEEDOR=$P!{cliente} AND CIA=$P!{CIA}) as saldoa45,
+(SELECT COALESCE(SUM(saldo),0.00) AS SALDO_VENCIDO FROM ORDENCOMPRA  WHERE DATEDIFF(CURRENT_DATE(), FECHA_INGRESO )between 46 and 60 AND ID_PROVEEDOR=$P!{cliente} AND CIA=$P!{CIA}) as saldoa60,
+(SELECT COALESCE(SUM(saldo),0.00) AS SALDO_VENCIDO FROM ORDENCOMPRA  WHERE DATEDIFF(CURRENT_DATE(), FECHA_INGRESO )between 90 and 90 AND ID_PROVEEDOR=$P!{cliente} AND CIA=$P!{CIA}) as saldoa90,
+(SELECT COALESCE(SUM(saldo),0.00) AS SALDO_VENCIDO FROM ORDENCOMPRA  WHERE DATEDIFF(CURRENT_DATE(), FECHA_INGRESO )>90 AND ID_PROVEEDOR=$P!{cliente} AND CIA=$P!{CIA}) as saldomas90 
+FROM ORDENCOMPRA F 
+LEFT JOIN DETALLE_RECIBOPAGO_PROVEEDOR DR ON DR.IDFACTURA = F.ID_ORDENCOMPRA
+LEFT JOIN RECIBOPAGO_PROVEEDOR R ON R.ID_RECIBO = DR.IDRECIBO 
+INNER JOIN COMPANY COM ON COM.ID_COMPANY = F.CIA 
+INNER JOIN PROVEEDOR P ON P.IDPROVEEDOR = F.ID_PROVEEDOR 
+INNER JOIN PAIS PA ON P.PAIS=PA.ID 
+LEFT JOIN (
+    SELECT DR.IDFACTURA, MAX(R.FECHA) AS FECHA
+    FROM RECIBOPAGO_PROVEEDOR R 
+    INNER JOIN DETALLE_RECIBOPAGO_PROVEEDOR DR ON R.ID_RECIBO = DR.IDRECIBO 
+    WHERE R.TIPO IN ('1') and r.estado!=0
+    GROUP BY DR.IDFACTURA
+) LAST_PAGO ON F.ID_ORDENCOMPRA = LAST_PAGO.IDFACTURA
+WHERE F.ID_PROVEEDOR = $P!{cliente} AND f.estado != 0  AND F.CIA=$P!{CIA} AND F.SALDO>0]]>
+	</queryString>
+	<field name="N" class="java.lang.Long"/>
+	<field name="ID_ORDENCOMPRA" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NFACTURA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FECHA_INGRESO" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROVEEDOR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PAIS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DIAS_FACTURA" class="java.lang.Integer"/>
+	<field name="DIAS_RECIBO" class="java.lang.Integer"/>
+	<field name="TOTAL_LEMP" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SALDO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IMG" class="java.io.InputStream">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMPANY" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NUMERO_RECIBO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FECHA" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ABONO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="saldo_total" class="java.math.BigDecimal"/>
+	<field name="saldo_vencido" class="java.math.BigDecimal"/>
+	<field name="saldo_novencido" class="java.math.BigDecimal"/>
+	<field name="saldoa30" class="java.math.BigDecimal"/>
+	<field name="saldoa45" class="java.math.BigDecimal"/>
+	<field name="saldoa60" class="java.math.BigDecimal"/>
+	<field name="saldoa90" class="java.math.BigDecimal"/>
+	<field name="saldomas90" class="java.math.BigDecimal"/>
+	<variable name="contador" class="java.lang.Integer" resetType="Group" resetGroup="FACT" calculation="Count"/>
+	<group name="FACT" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{ID_ORDENCOMPRA}]]></groupExpression>
+		<groupHeader>
+			<band height="27">
+				<textField>
+					<reportElement x="14" y="0" width="143" height="20" uuid="895a2e2a-0e06-42ac-bc58-e27bb6479be4"/>
+					<textFieldExpression><![CDATA[$F{NFACTURA}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="305" y="0" width="71" height="20" uuid="3f26b11b-251a-4287-a08e-e4d8468b907b"/>
+					<textFieldExpression><![CDATA[$F{TOTAL_LEMP}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="510" y="0" width="57" height="20" uuid="7c1f09b5-be47-4a00-9d31-785816a20b8f"/>
+					<textFieldExpression><![CDATA[$F{SALDO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="219" y="0" width="71" height="20" uuid="7e206f44-f377-426f-95ee-19f40c9457b2"/>
+					<textFieldExpression><![CDATA[$F{FECHA_INGRESO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="171" y="0" width="39" height="20" uuid="dd725816-de71-4a29-8aa2-c19624d33a76"/>
+					<textFieldExpression><![CDATA[$F{DIAS_FACTURA}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="0" width="14" height="20" uuid="62fd696e-d12e-4271-ae8e-fa96757a9e9a"/>
+					<textFieldExpression><![CDATA[$F{N}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="5">
+				<line>
+					<reportElement x="1" y="2" width="571" height="1" uuid="d5f73127-1f02-47c5-9367-d4963c16f9bd"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="1" y="3" width="570" height="117" uuid="19895902-2382-45cd-bd6a-b575a06f48d0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="51" width="468" height="27" backcolor="#0E1E6C" uuid="93ad6012-082f-46e8-ab8e-409364fbe28b"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="11" y="10" width="481" height="40" uuid="6d898a8c-2276-43cf-a362-e7e184bcd2a5"/>
+				<textElement>
+					<font fontName="Serif" size="23"/>
+				</textElement>
+				<text><![CDATA[ESTADO DE CUENTA SOLO SALDOS]]></text>
+			</staticText>
+			<image>
+				<reportElement x="492" y="10" width="69" height="43" uuid="15eb7fc6-9bde-4059-9451-08343411f69c"/>
+				<imageExpression><![CDATA[$F{IMG}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="11" y="54" width="299" height="20" forecolor="#FFFFFF" uuid="f7b169d8-52ed-4fcc-bef2-215726a61199"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="78" width="146" height="20" uuid="53a2b505-a7d1-427c-aae2-f078f06e9247"/>
+				<textFieldExpression><![CDATA[$F{PROVEEDOR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="78" width="76" height="20" uuid="19fe538a-bd3d-413b-bc14-92c9cec59366"/>
+				<text><![CDATA[PROVEEDOR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="98" width="42" height="20" uuid="ed0f4af4-e8ab-41ca-8a35-8986d2c8eea9"/>
+				<text><![CDATA[PAIS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="53" y="98" width="82" height="20" uuid="8d9b4e0f-ad4e-44a6-985f-fee8f2be6773"/>
+				<textFieldExpression><![CDATA[$F{PAIS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="9" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="0" width="143" height="20" uuid="dd08f5a8-7db5-4e5c-ba12-f68c49724132"/>
+				<text><![CDATA[NUMERO DOCUMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="0" width="71" height="20" uuid="de3202c6-d472-45b4-b3f3-c40a74785437"/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="510" y="0" width="57" height="20" uuid="68e84c6b-70c1-4b70-8dad-18eb6584b144"/>
+				<text><![CDATA[SALDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="0" width="71" height="20" uuid="70bd0067-4a35-4551-9732-af6736afaea9"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="0" width="79" height="20" uuid="19d1b8a6-98a5-4152-8890-72a7be79e4df"/>
+				<text><![CDATA[ABONO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="24" width="569" height="1" uuid="65090917-9c17-47e6-b739-25e54d27c296"/>
+			</line>
+			<staticText>
+				<reportElement x="171" y="0" width="39" height="20" uuid="a25cccb7-2ce1-419e-824d-acaa60730574"/>
+				<text><![CDATA[DIAS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{ABONO}!=null && $F{ABONO}>0.00]]></printWhenExpression>
+			<textField pattern="#,##0.00">
+				<reportElement x="396" y="1" width="79" height="20" uuid="b8906267-1c3b-4fe8-bc15-f84e26c8ff52">
+					<printWhenExpression><![CDATA[$F{ABONO}!=null && $F{ABONO}>0.00]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{ABONO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="13" y="0" width="143" height="20" uuid="be7f210d-1ee7-4e94-bc5e-8c62b88a37ad">
+					<printWhenExpression><![CDATA[$F{ABONO}!=null && $F{ABONO}>0.00]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{NUMERO_RECIBO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="219" y="1" width="71" height="20" uuid="866256a6-9ffe-4e7e-9586-c6241724f00b">
+					<printWhenExpression><![CDATA[$F{ABONO}!=null && $F{ABONO}>0.00]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="171" y="1" width="39" height="20" uuid="db17f799-098a-4c53-9661-bd131b9d3ebc">
+					<printWhenExpression><![CDATA[$F{ABONO}!=null && $F{ABONO}>0.00]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{DIAS_RECIBO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="40" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="571" height="23" uuid="3fef4199-8b87-4aa5-a55f-6701554677b8"/>
+			</rectangle>
+			<line>
+				<reportElement x="1" y="11" width="570" height="1" uuid="6c0c3bfa-489e-405a-914b-1fb5ba0432ef"/>
+			</line>
+			<staticText>
+				<reportElement x="5" y="0" width="70" height="11" uuid="9c2a08aa-30da-4291-9547-52bc75ec44ae"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SALDO TOTAL]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="5" y="12" width="70" height="11" uuid="3ad92de7-d314-41f1-9020-9e5301243866"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="0" width="70" height="11" uuid="d05661bb-4b0e-44f2-adf3-4e370923dea4"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SALDO VENCIDO]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="77" y="12" width="70" height="11" uuid="edf78386-3ae2-47da-93f7-5893047e971d"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo_vencido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="149" y="12" width="81" height="11" uuid="f650520b-3731-4c2f-8027-ee934391e3c9"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo_novencido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="149" y="0" width="81" height="11" uuid="b9fbb1d5-bb5c-434b-9400-8003a12e19be"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SALDO NO VENCIDO]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="230" y="12" width="70" height="11" uuid="78b7eb7f-c916-4e8e-b2e8-c6c0a4311446"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldoa30}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="230" y="0" width="70" height="11" uuid="8edebbb7-bb71-458d-b771-8000f71ae56f"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SALDO 0 A 30]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="301" y="12" width="70" height="11" uuid="4229768f-7fec-4ad7-82cd-d09636121731"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldoa45}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="301" y="0" width="70" height="11" uuid="f2c5a86a-57bc-49ed-b00e-89cdc50409ff"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SALDO 31 A 45]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="371" y="11" width="70" height="11" uuid="4da5a02b-d73a-4274-8425-3f0e12089eb2"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldoa60}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="371" y="0" width="70" height="11" uuid="0fc4a500-2c0f-4186-a9bf-f8f1dd2dcef5"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SALDO 46 A 60]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="441" y="11" width="70" height="11" uuid="39dc5201-94d9-4e7d-9886-7cda44807a4a"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldoa90}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="441" y="0" width="70" height="11" uuid="35669114-3d3b-4683-9a29-74d938006c54"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SALDO 61 A 90]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="510" y="0" width="61" height="11" uuid="e49e7435-84ec-4272-9647-1236e45a41d8"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SALDO MAS 90]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="510" y="11" width="61" height="11" uuid="46ed25bf-0c8d-49dc-a114-27838a46024b"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldomas90}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="5" y="3" width="100" height="20" uuid="ad88f2ca-c4cb-4289-8354-ca0793af3928"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="461" y="3" width="100" height="20" uuid="1ff7a3df-1ec1-45d5-aa4b-a4c7ff193583"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

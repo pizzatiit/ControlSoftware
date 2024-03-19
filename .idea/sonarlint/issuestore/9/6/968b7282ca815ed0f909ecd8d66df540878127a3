@@ -1,0 +1,124 @@
+
+f
+java:S1192l"IDefine a constant instead of duplicating this literal "Segoe UI" 3 times.(Å¦†ˆ8ŠŒ±ûÎ1
+X
+java:S1141´"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8ŒŒ±ûÎ1
+X
+java:S1141à"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8ŒŒ±ûÎ1
+X
+java:S1141ÿ"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8Œ±ûÎ1
+J
+java:S1604p"(Make this anonymous inner class a lambda(…æ©âÿÿÿÿÿ8Œ±ûÎ1
+E
+java:S1604{"(Make this anonymous inner class a lambda(ÿóÎ×8Œ±ûÎ1
+K
+java:S1604Š"(Make this anonymous inner class a lambda(»ûË­ûÿÿÿÿ8Œ±ûÎ1
+D
+java:S1604‹"(Make this anonymous inner class a lambda(¨í¡§úÿÿÿÿ
+:
+java:S1643Š"Use a StringBuilder instead.(‡ëÅÌ8Œ±ûÎ1
+:
+java:S1643«"Use a StringBuilder instead.(Óİõï8Œ±ûÎ1
+n	java:S101#"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(éšñçûÿÿÿÿ8’Œ±ûÎ1
+p
+java:S1450“"TRemove the "close" field and declare it as a local variable in the relevant methods.(Ñ¾©¦ÿÿÿÿÿ
+n
+java:S1450•"WRemove the "jButton1" field and declare it as a local variable in the relevant methods.(å……¶
+n
+java:S1450–"WRemove the "jButton2" field and declare it as a local variable in the relevant methods.(¤½ÃÜ
+s
+java:S1450—"WRemove the "jLabel11" field and declare it as a local variable in the relevant methods.(‰Ó‚©øÿÿÿÿ
+r
+java:S1450˜"VRemove the "jLabel3" field and declare it as a local variable in the relevant methods.(Îä€øÿÿÿÿ
+r
+java:S1450™"VRemove the "jPanel4" field and declare it as a local variable in the relevant methods.(§É†¬şÿÿÿÿ
+m
+java:S1450š"VRemove the "jPanel5" field and declare it as a local variable in the relevant methods.(³¡©ú
+w
+java:S1450›"[Remove the "jScrollPane1" field and declare it as a local variable in the relevant methods.(¤á×ÿÿÿÿÿ
+F
+java:S1948("$Make "bd" transient or serializable.(ªÁ¡ãşÿÿÿÿ8ë’±ûÎ1
+X	java:S1252"<This block of commented-out lines of code should be removed.(İ°Üù8ñ’±ûÎ1
+]	java:S1254"<This block of commented-out lines of code should be removed.(ó şÿÿÿÿ8ò’±ûÎ1
+W
+java:S1161U":Add the "@Override" annotation above this method signature(°Èê8Ÿ“±ûÎ1
+W
+java:S1161]":Add the "@Override" annotation above this method signature(†ŒË³8£“±ûÎ1
+\
+java:S1161b":Add the "@Override" annotation above this method signature(óÚ°ùÿÿÿÿ8Ê“±ûÎ1
+\
+java:S1161e":Add the "@Override" annotation above this method signature(Õş°ıüÿÿÿÿ8Ë“±ûÎ1
+u
+java:S3776é"RRefactor this method to reduce its Cognitive Complexity from 68 to the 15 allowed.(èşæüÿÿÿÿ8ä“±ûÎ1
+N
+java:S1135ê"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+R
+java:S2696ò"6Make the enclosing method "static" or remove this set.(šäøÑüÿÿÿÿ
+b
+java:S1858ò"F"result" is an array of strings, there's no need to call "toString()".(šäøÑüÿÿÿÿ
+\
+java:S2147¥"ECombine this catch with the one at line 419, which has the same body.(Ãôş•
+M	java:S106…"+Replace this use of System.out by a logger.(Ô°ô€ıÿÿÿÿ8ë“±ûÎ1
+K
+java:S1481"(Remove this unused "val" local variable.(ò¿º€ıÿÿÿÿ8ò“±ûÎ1
+Y
+java:S2696’"6Make the enclosing method "static" or remove this set.(·­°ùÿÿÿÿ8ó“±ûÎ1
+F	java:S108")Either remove or fill this block of code.(şàã‹8ö“±ûÎ1
+H	java:S106¦"+Replace this use of System.out by a logger.(¯±¡ö8÷“±ûÎ1
+M	java:S106±"+Replace this use of System.out by a logger.(Ä©‚šÿÿÿÿÿ8ù“±ûÎ1
+F
+java:S1481İ")Remove this unused "time" local variable.(©ïğ%8ı“±ûÎ1
+D
+java:S2111Ş"!Use "BigDecimal.valueOf" instead.(¤æî¦ûÿÿÿÿ8ş“±ûÎ1
+W
+java:S4719é"9Replace charset name argument with StandardCharsets.UTF_8(¢ØÕ’8©”±ûÎ1
+M	java:S106ê"+Replace this use of System.out by a logger.(Šìàòøÿÿÿÿ8ª”±ûÎ1
+M	java:S106ë"+Replace this use of System.out by a logger.(Å¶òäÿÿÿÿÿ8ª”±ûÎ1
+M	java:S106÷"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ8¬”±ûÎ1
+F
+java:S1481ü")Remove this unused "time" local variable.(©ïğ%8¬”±ûÎ1
+D
+java:S2111ı"!Use "BigDecimal.valueOf" instead.(¤æî¦ûÿÿÿÿ8¬”±ûÎ1
+W
+java:S4719ˆ"9Replace charset name argument with StandardCharsets.UTF_8(¢ØÕ’8®”±ûÎ1
+M	java:S106‰"+Replace this use of System.out by a logger.(Šìàòøÿÿÿÿ8¯”±ûÎ1
+M	java:S106Š"+Replace this use of System.out by a logger.(Å¶òäÿÿÿÿÿ8¯”±ûÎ1
+M	java:S106–"+Replace this use of System.out by a logger.(¨¶ÑÍşÿÿÿÿ8±”±ûÎ1
+A
+java:S1172¶"*Remove this unused method parameter "evt".(‚À‡ä
+N
+java:S1135·"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+Y
+java:S2696º"6Make the enclosing method "static" or remove this set.(šäøÑüÿÿÿÿ8µ”±ûÎ1
+i
+java:S1858º"F"result" is an array of strings, there's no need to call "toString()".(šäøÑüÿÿÿÿ8¶”±ûÎ1
+A
+java:S1172Ñ"*Remove this unused method parameter "evt".(Ş»úã
+N
+java:S1135Ò"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172Ö"*Remove this unused method parameter "evt".(æ­«èúÿÿÿÿ
+N
+java:S1135×"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172Û"*Remove this unused method parameter "evt".(¹¾ûüÿÿÿÿ
+N
+java:S1135Ü"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172ç"*Remove this unused method parameter "evt".(ˆ¿¾Öûÿÿÿÿ
+U
+java:S1135è"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ8¼”±ûÎ1
+F
+java:S1197ï"*Move the array designators [] to the type.(¡şÏÖøÿÿÿÿ
+\
+java:S2147ş"ECombine this catch with the one at line 508, which has the same body.(¨¦Š½
+\
+java:S2147€"ECombine this catch with the one at line 510, which has the same body.(ã€ 
+[
+java:S2147‚"ECombine this catch with the one at line 512, which has the same body.(ñÎ¯%
+w
+java:S1128"URemove this unused import 'com.mycompany.controlsoftware.caja_apertura.fondoinicial'.(Œúßıÿÿÿÿ8Á”±ûÎ1
+q
+java:S1128"ORemove this unused import 'com.mycompany.controlsoftware.caja_cierre.jButton5'.(ÃúÈğşÿÿÿÿ8§ĞÂÿÎ1
+ê
+java:S6541é"ÆA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 162 to 64, Complexity from 17 to 14, Nesting Level from 8 to 2, Number of Variables from 61 to 6.(èşæüÿÿÿÿ8Ä”±ûÎ1

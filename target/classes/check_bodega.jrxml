@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="226" pageHeight="792" columnWidth="186" leftMargin="20" rightMargin="20" topMargin="15" bottomMargin="15" uuid="b465133b-a8a0-41d7-90f3-f4efd593c502">
+	<property name="ireport.zoom" value="2.3579476910000023"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pedido" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="us" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select co.company, cp.numero_pedido as NPEDIDO, CASE cp.estado WHEN '1' THEN 'INGRESADO' WHEN '2' THEN 'FINALIZADO' WHEN '0' THEN 'ANULADO' END AS ESTADO, c.nombre as CLIENTE, u.user as USUARIO, dcp.id_producto as IDPRODUCTO, p.codigo as CODLETRAS, p.descripcion as DESCRIPCION, dcp.cantidad  as CANTIDAD, cp.fecha_sistema from pedidochequeo cp inner join company co on co.id_company=cp.cia inner join clientes c on cp.id_cliente=c.idcliente inner join detalle_pedido_chequeo_bodega dcp on dcp.id_pedido_bodega=cp.id_pedido_chequeo  inner join usuario u on dcp.idusuario=u.cod_user inner join producto p on dcp.id_producto=p.idproducto where cp.id_pedido_chequeo=$P!{pedido} and dcp.idusuario=$P!{us} and cp.cia=$P!{cia}]]>
+	</queryString>
+	<field name="company" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NPEDIDO" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="CLIENTE" class="java.lang.String"/>
+	<field name="USUARIO" class="java.lang.String"/>
+	<field name="IDPRODUCTO" class="java.lang.Integer"/>
+	<field name="CODLETRAS" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CANTIDAD" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_sistema" class="java.time.LocalDateTime">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="141" splitType="Stretch">
+			<textField>
+				<reportElement x="59" y="40" width="127" height="20" uuid="2798ced1-3f24-4f4e-b8be-0bf2a91a0c79"/>
+				<textFieldExpression><![CDATA[$F{NPEDIDO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="59" height="20" uuid="a477c740-84f3-4754-90ef-48e5ff045b3b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° PEDIDO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="37" y="80" width="149" height="20" uuid="a0c593ca-31f9-466b-8c8a-8e308591a1d0"/>
+				<textFieldExpression><![CDATA[$F{fecha_sistema}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="37" height="20" uuid="c0048ca1-4739-4617-b6bd-7812b28e9f2d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="72" y="100" width="114" height="20" uuid="15aa1e34-829f-4516-9d3b-781a9bbf3937"/>
+				<textFieldExpression><![CDATA[$F{USUARIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="72" height="20" uuid="48f12dab-4b6c-4cc7-93b4-235ce13bea54"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[BODEGUERO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="49" y="120" width="137" height="20" uuid="215a3082-79a4-49cb-86db-bfbad3d38bca"/>
+				<textFieldExpression><![CDATA[$F{CLIENTE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="120" width="49" height="20" uuid="b5871b7b-c59d-4af9-a994-eb89e16d47da"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLIENTE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="20" width="186" height="20" uuid="6fc08acb-0c5e-494c-83b6-95ff33bc1398"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="186" height="20" uuid="c5eb9a03-77ae-4519-ba48-13e4bd56738b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPROBANTE DE BODEGA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="49" y="60" width="137" height="20" uuid="f74f2b15-19e4-4045-a979-282eda3447e6"/>
+				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="49" height="20" uuid="8e48b499-bae2-46d0-8d54-20d4a94ed0a5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="9" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="11" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="20" height="11" uuid="17bc2fb0-4ca3-4e3e-a48c-5fb35c2471ed"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="0" width="111" height="11" uuid="73119c8f-34fc-4d5d-8fea-5343739a60bb"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO LETRAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="149" y="0" width="37" height="11" uuid="b11e8021-0a14-433a-a328-784fa0793453"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANT]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="20" height="11" uuid="8c125938-9838-4572-8c3b-7bc726b5d53c"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IDPRODUCTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="29" y="0" width="111" height="11" uuid="30b5f966-7b31-4195-a8cc-1a910fe74d40"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODLETRAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="0" width="37" height="11" uuid="b04ed434-44ef-420f-a6c8-29d15c2158c0"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="11" width="186" height="11" uuid="9a6a7fb8-6970-4394-b7b3-7584a2b886fc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="1" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="2" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="1" splitType="Stretch"/>
+	</summary>
+</jasperReport>

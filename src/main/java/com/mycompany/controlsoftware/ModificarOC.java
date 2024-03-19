@@ -1,0 +1,2342 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package com.mycompany.controlsoftware;
+
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
+/**
+ *
+ * @author Usuario
+ */
+public class ModificarOC extends javax.swing.JInternalFrame {
+
+    /**
+     * Creates new form OrdenCompra
+     */
+    public static double qty, cl = 0.0;
+    public static DecimalFormat num = new DecimalFormat("#,###.00");
+    DefaultTableModel modelo;
+    BaseDeDatos bd = new BaseDeDatos();
+    int orden = 0;
+
+    public ModificarOC(int oc) {
+        super("Usuario: " + new BaseDeDatos().valor("select user from usuario where cod_user=" + ControlSoftware.us) + ", Sucursal: " + new BaseDeDatos().valor("select company from company where id_company=" + ControlSoftware.cia));
+
+        initComponents();
+        orden = oc;
+
+        Object[] fila = new Object[20];
+        nfactura.setText(bd.valor("select nfactura from ordencompra where id_ordencompra=" + oc));
+        factor.setText(bd.valor("select factor from ordencompra where id_ordencompra=" + oc));
+        arancel.setText(bd.valor("select arancel from ordencompra where id_ordencompra=" + oc));
+        codprov.setText(bd.valor("select id_proveedor from ordencompra where id_ordencompra=" + oc));
+        desprov.setText(bd.valor("select proveedor from proveedor where idproveedor=" + codprov.getText()));
+        String u = bd.valor("select metodopago from ordencompra where id_ordencompra=" + oc);
+        if (u.equals("0")) {
+            metodo_pago.setSelectedIndex(0);
+            plazo.setEnabled(true);
+            plazo.setText(bd.valor("select plazo from ordencompra where id_ordencompra=" + oc));
+        }
+        if (u.equals("1")) {
+            metodo_pago.setSelectedIndex(1);
+            plazo.setEnabled(false);
+        }
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(bd.valor("select fecha_ingreso from ordencompra where id_ordencompra=" + oc));
+            fechaingreso.setDate(date);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        observacion.setText(bd.valor("select observacion from ordencompra where id_ordencompra=" + oc));
+        subtotal.setText(bd.valor("select subtotal from ordencompra where id_ordencompra=" + oc));
+        recargos.setText(bd.valor("select recargos from ordencompra where id_ordencompra=" + oc));
+        totall.setText(bd.valor("select total_lemp from ordencompra where id_ordencompra=" + oc));
+        totald.setText(bd.valor("select total_dolar from ordencompra where id_ordencompra=" + oc));
+
+        idprod.setText("0");
+        codprod.setText("Seleccione producto");
+        desprod.setText("Seleccione producto");
+        u1.setText("40");
+        u2.setText("45");
+        u3.setText("50");
+        u4.setText("60");
+        u5.setText("70");
+        p1.setText("0.0");
+        p2.setText("0.0");
+        p3.setText("0.0");
+        p4.setText("0.0");
+        p5.setText("0.0");
+        cantidad.setText("0.0");
+        costoiniciallempiras.setText("0.0");
+        costopromlempiras.setText("0.0");
+        costopromdolar.setText("0.0");
+        costoinicialdolar.setText("0.0");
+        costofinaldolar.setText("0.0");
+        costofinallempiras.setText("0.0");
+        bd.LlenarTabla("select d.idproducto, p.descripcion, d.cantidad, d.precioinicialL, d.precioinicialD, d.preciocompraL, d.preciocompraD, d.preciopromL, d.preciopromD, d.u1,d.p1,d.u2,d.p2,d.u3,d.p3,d.u4,d.p4,d.u5,d.p5,d.costototalL,d.preciototalL from detalleorden d inner join producto p on p.idproducto=d.idproducto where d.id_ordencompra=" + oc + " and d.cia=" + ControlSoftware.cia, detalles);
+        modelo = (DefaultTableModel) detalles.getModel();
+        //autoajustar();
+        //bloqueo de arancel
+        // arancel.setEnabled(false);
+        //factor.setEnabled(false);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel5 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        nfactura = new javax.swing.JTextField();
+        aggprov = new javax.swing.JButton();
+        codprov = new javax.swing.JTextField();
+        desprov = new javax.swing.JTextField();
+        factor = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        arancel = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        metodo_pago = new javax.swing.JComboBox<>();
+        fechaingreso = new com.toedter.calendar.JDateChooser();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        observacion = new javax.swing.JTextArea();
+        jLabel24 = new javax.swing.JLabel();
+        plazo = new javax.swing.JTextField();
+        jButton10 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        recargos = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        totald = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        totall = new javax.swing.JTextField();
+        subtotal = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        detalles = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        u1 = new javax.swing.JTextField();
+        p1 = new javax.swing.JTextField();
+        u2 = new javax.swing.JTextField();
+        p2 = new javax.swing.JTextField();
+        u3 = new javax.swing.JTextField();
+        p3 = new javax.swing.JTextField();
+        u4 = new javax.swing.JTextField();
+        p4 = new javax.swing.JTextField();
+        u5 = new javax.swing.JTextField();
+        p5 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        agg = new javax.swing.JButton();
+        idprod = new javax.swing.JTextField();
+        codprod = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        cantidad = new javax.swing.JTextField();
+        costofinaldolar = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        costofinallempiras = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        desprod = new javax.swing.JTextField();
+        costopromdolar = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
+        costopromlempiras = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        costoinicialdolar = new javax.swing.JTextField();
+        costoiniciallempiras = new javax.swing.JTextField();
+        agregar = new javax.swing.JButton();
+        modificar = new javax.swing.JButton();
+        eliminar = new javax.swing.JButton();
+        calcular = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        regresar = new javax.swing.JButton();
+        confirmar = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel27.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel27.setText("MODIFICAR ÓRDEN DE COMPRA");
+
+        jPanel3.setBackground(new java.awt.Color(195, 180, 225));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DATOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("No° FACTURA");
+
+        nfactura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nfacturaKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nfacturaKeyTyped(evt);
+            }
+        });
+
+        aggprov.setBackground(new java.awt.Color(255, 255, 255));
+        aggprov.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        aggprov.setForeground(new java.awt.Color(0, 0, 0));
+        aggprov.setText("PROVEEDOR");
+        aggprov.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aggprovActionPerformed(evt);
+            }
+        });
+
+        codprov.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                codprovFocusLost(evt);
+            }
+        });
+        codprov.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                codprovMouseClicked(evt);
+            }
+        });
+        codprov.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                codprovKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                codprovKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                codprovKeyTyped(evt);
+            }
+        });
+
+        desprov.setEditable(false);
+
+        factor.setEditable(false);
+        factor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                factorKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                factorKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                factorKeyTyped(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("FACTOR");
+
+        jLabel21.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel21.setText("ARANCEL");
+
+        arancel.setEditable(false);
+        arancel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                arancelKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                arancelKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                arancelKeyTyped(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("METODO PAGO");
+
+        metodo_pago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CREDITO", "CONTADO" }));
+        metodo_pago.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                metodo_pagoItemStateChanged(evt);
+            }
+        });
+        metodo_pago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                metodo_pagoActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setText("FECHA INGRESO");
+
+        jLabel8.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("OBSERVACIÓN");
+
+        observacion.setColumns(20);
+        observacion.setRows(5);
+        observacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                observacionKeyPressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(observacion);
+
+        jLabel24.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel24.setText("PLAZO DE PAGO");
+
+        plazo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                plazoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                plazoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                plazoKeyTyped(evt);
+            }
+        });
+
+        jButton10.setBackground(new java.awt.Color(255, 255, 255));
+        jButton10.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jButton10.setForeground(new java.awt.Color(0, 0, 0));
+        jButton10.setText("CONTINUAR");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nfactura))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(aggprov)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(codprov, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(desprov, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addGap(124, 124, 124))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(plazo, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                            .addComponent(jLabel24)
+                            .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(metodo_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(arancel)
+                                .addGap(18, 18, 18)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(factor, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(fechaingreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(nfactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(aggprov, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(desprov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(codprov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(jLabel5))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(factor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(arancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(metodo_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fechaingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(plazo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(195, 180, 225));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TOTALES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("SUBTOTAL $.");
+
+        jLabel16.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel16.setText("RECARGOS $.");
+
+        recargos.setEditable(false);
+
+        jLabel17.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel17.setText("TOTAL $.");
+
+        totald.setEditable(false);
+
+        jLabel18.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel18.setText("TOTAL L.");
+
+        totall.setEditable(false);
+
+        subtotal.setEditable(false);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totald, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(recargos, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(totall)
+                    .addComponent(subtotal))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(subtotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(recargos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(totald, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(totall, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        detalles = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        detalles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo Producto", "Descripcion", "Cantidad", "PrecioinicialL", "PrecioinicialD", "PreciocompraL", "PreciocompraD", "PreciopromL", "PreciopromD", "Utilidad1", "Precio1", "Utilidad2", "Precio2", "Utilidad3", "Precio3", "Utilidad4", "Precio4", "Utilidad5", "Precio5", "CostoTotalL", "PrecioTotalL"
+            }
+        ));
+        detalles.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        detalles.getTableHeader().setReorderingAllowed(false);
+        detalles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                detallesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(detalles);
+
+        jPanel2.setBackground(new java.awt.Color(195, 180, 225));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "AGREGAR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+
+        u1.setEnabled(false);
+        u1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                u1FocusLost(evt);
+            }
+        });
+        u1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                u1ActionPerformed(evt);
+            }
+        });
+        u1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                u1KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                u1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                u1KeyTyped(evt);
+            }
+        });
+
+        p1.setEnabled(false);
+        p1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                p1FocusLost(evt);
+            }
+        });
+        p1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                p1KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                p1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                p1KeyTyped(evt);
+            }
+        });
+
+        u2.setEnabled(false);
+        u2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                u2FocusLost(evt);
+            }
+        });
+        u2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                u2KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                u2KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                u2KeyTyped(evt);
+            }
+        });
+
+        p2.setEnabled(false);
+        p2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                p2FocusLost(evt);
+            }
+        });
+        p2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                p2KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                p2KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                p2KeyTyped(evt);
+            }
+        });
+
+        u3.setEnabled(false);
+        u3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                u3FocusLost(evt);
+            }
+        });
+        u3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                u3KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                u3KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                u3KeyTyped(evt);
+            }
+        });
+
+        p3.setEnabled(false);
+        p3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                p3FocusLost(evt);
+            }
+        });
+        p3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                p3KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                p3KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                p3KeyTyped(evt);
+            }
+        });
+
+        u4.setEnabled(false);
+        u4.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                u4FocusLost(evt);
+            }
+        });
+        u4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                u4KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                u4KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                u4KeyTyped(evt);
+            }
+        });
+
+        p4.setEnabled(false);
+        p4.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                p4FocusLost(evt);
+            }
+        });
+        p4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                p4KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                p4KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                p4KeyTyped(evt);
+            }
+        });
+
+        u5.setEnabled(false);
+        u5.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                u5FocusLost(evt);
+            }
+        });
+        u5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                u5KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                u5KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                u5KeyTyped(evt);
+            }
+        });
+
+        p5.setEnabled(false);
+        p5.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                p5FocusLost(evt);
+            }
+        });
+        p5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                p5KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                p5KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                p5KeyTyped(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("PORC. UTILIDAD");
+
+        jLabel10.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel10.setText("PRECIOS");
+
+        jLabel11.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel11.setText("PRECIO 1");
+
+        jLabel12.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel12.setText("PRECIO 2");
+
+        jLabel13.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel13.setText("PRECIO 3");
+
+        jLabel14.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("PRECIO 4");
+
+        jLabel15.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel15.setText("PRECIO 5");
+
+        jLabel19.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel19.setText("COSTO INCIAL DOLAR");
+
+        jLabel6.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("COSTO INICIAL LPS");
+
+        agg.setBackground(new java.awt.Color(255, 255, 255));
+        agg.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        agg.setForeground(new java.awt.Color(0, 0, 0));
+        agg.setText("PRODUCTO");
+        agg.setEnabled(false);
+        agg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aggActionPerformed(evt);
+            }
+        });
+
+        idprod.setEnabled(false);
+        idprod.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                idprodFocusLost(evt);
+            }
+        });
+        idprod.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                idprodMouseClicked(evt);
+            }
+        });
+        idprod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                idprodKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idprodKeyTyped(evt);
+            }
+        });
+
+        codprod.setEditable(false);
+        codprod.setEnabled(false);
+
+        jLabel20.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel20.setText("CANTIDAD COMPRA");
+
+        cantidad.setEnabled(false);
+        cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cantidadKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cantidadKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cantidadKeyTyped(evt);
+            }
+        });
+
+        costofinaldolar.setEditable(false);
+        costofinaldolar.setEnabled(false);
+        costofinaldolar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                costofinaldolarKeyTyped(evt);
+            }
+        });
+
+        jLabel22.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel22.setText("COSTO FINAL DOLAR");
+
+        costofinallempiras.setEditable(false);
+        costofinallempiras.setEnabled(false);
+        costofinallempiras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                costofinallempirasKeyTyped(evt);
+            }
+        });
+
+        jLabel23.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel23.setText("COSTO FINAL LPS");
+
+        desprod.setEditable(false);
+        desprod.setEnabled(false);
+        desprod.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                desprodMouseClicked(evt);
+            }
+        });
+        desprod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                desprodKeyTyped(evt);
+            }
+        });
+
+        costopromdolar.setEditable(false);
+        costopromdolar.setEnabled(false);
+        costopromdolar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                costopromdolarKeyTyped(evt);
+            }
+        });
+
+        jLabel25.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel25.setText("COSTO PROM DOLAR");
+
+        costopromlempiras.setEditable(false);
+        costopromlempiras.setEnabled(false);
+        costopromlempiras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                costopromlempirasKeyTyped(evt);
+            }
+        });
+
+        jLabel26.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel26.setText("COSTO PROM LPS");
+
+        costoinicialdolar.setEnabled(false);
+        costoinicialdolar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                costoinicialdolarFocusLost(evt);
+            }
+        });
+        costoinicialdolar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                costoinicialdolarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                costoinicialdolarKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                costoinicialdolarKeyTyped(evt);
+            }
+        });
+
+        costoiniciallempiras.setEnabled(false);
+        costoiniciallempiras.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                costoiniciallempirasFocusLost(evt);
+            }
+        });
+        costoiniciallempiras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                costoiniciallempirasKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                costoiniciallempirasKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                costoiniciallempirasKeyTyped(evt);
+            }
+        });
+
+        agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add24.png"))); // NOI18N
+        agregar.setText("AGREGAR");
+        agregar.setEnabled(false);
+        agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarActionPerformed(evt);
+            }
+        });
+
+        modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit24.png"))); // NOI18N
+        modificar.setText("MODIFICAR");
+        modificar.setEnabled(false);
+        modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarActionPerformed(evt);
+            }
+        });
+
+        eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete24.png"))); // NOI18N
+        eliminar.setText("ELIMINAR");
+        eliminar.setEnabled(false);
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
+
+        calcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/CALCULATE.png"))); // NOI18N
+        calcular.setText("CALCULAR");
+        calcular.setEnabled(false);
+        calcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calcularActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(u1)
+                                    .addComponent(u2)
+                                    .addComponent(u3)
+                                    .addComponent(u4)
+                                    .addComponent(u5))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel15))
+                                .addGap(18, 18, 18))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(p1)
+                                .addComponent(p2)
+                                .addComponent(p3)
+                                .addComponent(p4)
+                                .addComponent(p5, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel10))))
+                    .addComponent(desprod, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel25)
+                            .addComponent(costopromdolar, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(86, 86, 86)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(costopromlempiras)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel26)
+                                .addGap(21, 21, 21))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGap(20, 20, 20))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(costoinicialdolar, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(costofinaldolar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
+                            .addComponent(jLabel22))
+                        .addGap(86, 86, 86)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(costofinallempiras)
+                            .addComponent(costoiniciallempiras)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel23)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(agg)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(idprod, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(codprod, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cantidad))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(modificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(eliminar)))
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(calcular)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(agg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(codprod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(idprod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(desprod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(costoinicialdolar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(costoiniciallempiras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addComponent(calcular, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(costofinaldolar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(costofinallempiras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(costopromdolar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(costopromlempiras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(p1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(u1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(u2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(u3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(u4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(u5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34))
+        );
+
+        jPanel1.setBackground(new java.awt.Color(195, 180, 225));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+
+        regresar.setBackground(new java.awt.Color(255, 255, 255));
+        regresar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        regresar.setForeground(new java.awt.Color(0, 0, 0));
+        regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back24.png"))); // NOI18N
+        regresar.setText("REGRESAR");
+        regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                regresarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(regresar);
+
+        confirmar.setBackground(new java.awt.Color(255, 255, 255));
+        confirmar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        confirmar.setForeground(new java.awt.Color(0, 0, 0));
+        confirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save24.png"))); // NOI18N
+        confirmar.setText("GUARDAR");
+        confirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(confirmar);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 40, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel6.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel6.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel28.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setText("CONTROLSOFTWARE - COPYRIGHT 2023 - ING. JUNIOR MORALES");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel28)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel28)
+                .addGap(0, 9, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    void autoajustar() {
+        // Obtén el TableColumnModel de tu JTable
+        TableColumnModel columnModel = detalles.getColumnModel();
+
+// Itera sobre las columnas y ajusta su tamaño al contenido
+        for (int columnIndex = 0; columnIndex < columnModel.getColumnCount(); columnIndex++) {
+            TableColumn column = columnModel.getColumn(columnIndex);
+            int width = 0;
+
+            // Ajusta el ancho de la columna según el contenido de las celdas
+            TableCellRenderer renderer = column.getHeaderRenderer();
+            if (renderer == null) {
+                renderer = detalles.getTableHeader().getDefaultRenderer();
+            }
+            Component headerComponent = renderer.getTableCellRendererComponent(detalles, column.getHeaderValue(), false, false, 0, columnIndex);
+            width = headerComponent.getPreferredSize().width;
+
+            for (int row = 0; row < detalles.getRowCount(); row++) {
+                renderer = detalles.getCellRenderer(row, columnIndex);
+                Component component = renderer.getTableCellRendererComponent(detalles, detalles.getValueAt(row, columnIndex), false, false, row, columnIndex);
+                width = Math.max(width, component.getPreferredSize().width);
+            }
+
+            // Establece el ancho ajustado para la columna
+            column.setPreferredWidth(width);
+        }
+
+// Ajusta el tamaño de las columnas al contenido
+        detalles.getTableHeader().resizeAndRepaint();
+    }
+    private void aggprovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggprovActionPerformed
+        // TODO add your handling code here:
+        seleccionar_proveedor3 l = new seleccionar_proveedor3();
+        Dimension internalFrameSize = l.getSize();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        l.setLocation((screenSize.width - internalFrameSize.width) / 2,
+                (screenSize.height - internalFrameSize.height) / 2);
+        DESKSOFTWARE.escritorio.add(l);
+        l.show();
+    }//GEN-LAST:event_aggprovActionPerformed
+
+    private void codprovMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_codprovMouseClicked
+
+    }//GEN-LAST:event_codprovMouseClicked
+
+    private void codprovKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codprovKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9') || (key == '.' && codprov.getText().contains("."))) {
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_codprovKeyTyped
+
+    private void aggActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggActionPerformed
+        // TODO add your handling code here: 
+        seleccionar_productouoc l = new seleccionar_productouoc();
+        Dimension internalFrameSize = l.getSize();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        l.setLocation((screenSize.width - internalFrameSize.width) / 2,
+                (screenSize.height - internalFrameSize.height) / 2);
+        DESKSOFTWARE.escritorio.add(l);
+        l.show();
+
+    }//GEN-LAST:event_aggActionPerformed
+
+    private void idprodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_idprodMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idprodMouseClicked
+
+    private void idprodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idprodKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_idprodKeyTyped
+
+    public void calcular() {
+        double st = Double.parseDouble(subtotal.getText());
+        double cd = Double.parseDouble(costoinicialdolar.getText()) * Double.parseDouble(cantidad.getText());
+        double r1 = Double.parseDouble(recargos.getText());
+        double r = cd * (Double.parseDouble(arancel.getText()) / 100);
+        subtotal.setText("" + String.format("%.2f", (st + cd)));
+        recargos.setText("" + String.format("%.2f", (r + r1)));
+        double suma = Double.parseDouble(subtotal.getText()) + Double.parseDouble(recargos.getText());
+        totald.setText("" + String.format("%.2f", suma));
+        totall.setText("" + String.format("%.2f", (Double.parseDouble(totald.getText()) * Double.parseDouble(factor.getText()))));
+    }
+
+    public void limpiar() {
+        idprod.setText("0");
+        codprod.setText("seleccionar");
+        desprod.setText("seleccionar");
+        u1.setText("40");
+        u2.setText("45");
+        u3.setText("50");
+        u4.setText("60");
+        u5.setText("70");
+        p1.setText("0.0");
+        p2.setText("0.0");
+        p3.setText("0.0");
+        p4.setText("0.0");
+        p5.setText("0.0");
+        cantidad.setText("0.0");
+        costoiniciallempiras.setText("0.0");
+        costoinicialdolar.setText("0.0");
+        costopromlempiras.setText("0.0");
+        costopromdolar.setText("0.0");
+        costofinallempiras.setText("0.0");
+        costofinaldolar.setText("0.0");
+    }
+    private void desprodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_desprodMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_desprodMouseClicked
+
+    private void desprodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_desprodKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_desprodKeyTyped
+
+    private void arancelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_arancelKeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_arancelKeyPressed
+
+    private void arancelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_arancelKeyTyped
+        // TODO add your handling code here:
+
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.') || (key == '.' && arancel.getText().contains("."))) {
+            evt.consume();
+        }
+        if (arancel.getText().length() > 254) {
+            evt.consume();
+            Toolkit.getDefaultToolkit().beep();
+        }
+    }//GEN-LAST:event_arancelKeyTyped
+
+    private void factorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_factorKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.') || (key == '.' && factor.getText().contains("."))) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_factorKeyTyped
+
+    private void u1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_u1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_u1ActionPerformed
+
+    private void costofinaldolarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costofinaldolarKeyTyped
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_costofinaldolarKeyTyped
+
+    private void costofinallempirasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costofinallempirasKeyTyped
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_costofinallempirasKeyTyped
+
+    private void u1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u1KeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.' || key == '-')  || (key == '.' && u1.getText().contains(".")) || (key == '-' && !u1.getText().isEmpty())){     evt.consume();
+        }
+    }//GEN-LAST:event_u1KeyTyped
+
+    private void u1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u1KeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_u1KeyReleased
+
+    private void u2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u2KeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_u2KeyReleased
+
+    private void u3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u3KeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+
+        }
+    }//GEN-LAST:event_u3KeyReleased
+
+    private void u4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u4KeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+
+        }
+    }//GEN-LAST:event_u4KeyReleased
+
+    private void u5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u5KeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+
+        }
+    }//GEN-LAST:event_u5KeyReleased
+
+    private void u2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u2KeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.' || key == '-')  || (key == '.' && u2.getText().contains(".")) || (key == '-' && !u2.getText().isEmpty())){     evt.consume();
+        }
+    }//GEN-LAST:event_u2KeyTyped
+
+    private void u3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u3KeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.' || key == '-')  || (key == '.' && u3.getText().contains(".")) || (key == '-' && !u3.getText().isEmpty())){    evt.consume();
+        }
+    }//GEN-LAST:event_u3KeyTyped
+
+    private void u4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u4KeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.' || key == '-')  || (key == '.' && u4.getText().contains(".")) || (key == '-' && !u4.getText().isEmpty())){     evt.consume();
+        }
+    }//GEN-LAST:event_u4KeyTyped
+
+    private void u5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u5KeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.' || key == '-')  || (key == '.' && u5.getText().contains(".")) || (key == '-' && !u5.getText().isEmpty())){     evt.consume();
+        }
+    }//GEN-LAST:event_u5KeyTyped
+
+    private void p1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p1KeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_p1KeyTyped
+
+    private void p2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p2KeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_p2KeyTyped
+
+    private void p3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p3KeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_p3KeyTyped
+
+    private void p4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p4KeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_p4KeyTyped
+
+    private void p5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p5KeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_p5KeyTyped
+
+    private void cantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cantidadKeyTyped
+        // TODO add your handling code here:
+
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.') || (key == '.' && cantidad.getText().contains("."))) {
+            evt.consume();
+        }
+
+
+    }//GEN-LAST:event_cantidadKeyTyped
+
+    private void p1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p1KeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+
+        }
+    }//GEN-LAST:event_p1KeyReleased
+
+    private void p2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p2KeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_p2KeyReleased
+
+    private void p3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p3KeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+
+        }
+    }//GEN-LAST:event_p3KeyReleased
+
+    private void p4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p4KeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+
+        }
+    }//GEN-LAST:event_p4KeyReleased
+
+    private void p5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p5KeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+
+        }
+    }//GEN-LAST:event_p5KeyReleased
+
+    private void cantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cantidadKeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+            if (cantidad.getText().isEmpty()) {
+                cantidad.setText("0.0");
+
+            }
+
+        }
+
+    }//GEN-LAST:event_cantidadKeyReleased
+
+    private void costopromdolarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costopromdolarKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_costopromdolarKeyTyped
+
+    private void costopromlempirasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costopromlempirasKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_costopromlempirasKeyTyped
+
+    private void plazoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plazoKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_plazoKeyTyped
+
+    private void metodo_pagoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_metodo_pagoItemStateChanged
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_metodo_pagoItemStateChanged
+
+    private void metodo_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodo_pagoActionPerformed
+        // TODO add your handling code here:
+        if (metodo_pago.getSelectedIndex() == 1) {
+            //tipo de pago contado
+            plazo.setText("0.0");
+            plazo.setEnabled(false);
+        } else {
+            plazo.setEnabled(true);
+        }
+    }//GEN-LAST:event_metodo_pagoActionPerformed
+
+    private void codprovKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codprovKeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+            if (codprov.getText().isEmpty()) {
+                codprov.setText("0");
+                desprov.setText("Seleccione proveedor");
+            }
+        }
+
+    }//GEN-LAST:event_codprovKeyReleased
+
+    private void detallesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_detallesMouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_detallesMouseClicked
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        if (Double.parseDouble(factor.getText()) <= 0) {
+            factor.setText("1.00");
+        }
+        if (nfactura.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Numero de factura no puede estar vacío");
+            return;
+        }
+        if (fechaingreso.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Fecha de ingreso no puede estar vacío");
+            return;
+        }
+        if (metodo_pago.getSelectedIndex() == 0 && plazo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Plazo de pago no puede estar vacío");
+            return;
+        }
+        if (metodo_pago.getSelectedIndex() == 0 && Double.parseDouble("" + plazo.getText()) < 1) {
+            JOptionPane.showMessageDialog(null, "Plazo debe ser mayor que 0");
+            return;
+        }
+
+        if (Double.parseDouble("" + factor.getText()) == 0) {
+            JOptionPane.showMessageDialog(null, "El factor no puede ser 0");
+            return;
+        }
+        if (codprov.getText().isEmpty() || codprov.getText().equals("0") || desprov.getText().isEmpty() || desprov.getText().equals("Seleccione proveedor")) {
+            JOptionPane.showMessageDialog(null, "Seleccione proveedor");
+            return;
+        }
+        agg.setEnabled(true);
+        idprod.setEnabled(true);
+        codprod.setEnabled(true);
+        desprod.setEnabled(true);
+        cantidad.setEnabled(true);
+        costoinicialdolar.setEnabled(true);
+        costoiniciallempiras.setEnabled(true);
+        costopromdolar.setEnabled(true);
+        costopromlempiras.setEnabled(true);
+        costofinaldolar.setEnabled(true);
+        costofinallempiras.setEnabled(true);
+        u1.setEnabled(true);
+        u2.setEnabled(true);
+        u3.setEnabled(true);
+        u4.setEnabled(true);
+        u5.setEnabled(true);
+        p1.setEnabled(true);
+        p2.setEnabled(true);
+        p3.setEnabled(true);
+        p4.setEnabled(true);
+        p5.setEnabled(true);
+        nfactura.setEnabled(false);
+        aggprov.setEnabled(false);
+        codprov.setEnabled(false);
+        desprov.setEnabled(false);
+        arancel.setEnabled(false);
+        factor.setEnabled(false);
+        metodo_pago.setEnabled(false);
+        plazo.setEnabled(false);
+        fechaingreso.setEnabled(false);
+        calcular.setEnabled(true);
+
+        modificar.setEnabled(true);
+        eliminar.setEnabled(true);
+        agg.doClick();
+
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void arancelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_arancelKeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+            if (arancel.getText().isEmpty()) {
+                arancel.setText("0.0");
+            }
+        }
+    }//GEN-LAST:event_arancelKeyReleased
+
+    private void factorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_factorKeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+            if (factor.getText().isEmpty()) {
+                factor.setText("0.0");
+            }
+        }
+    }//GEN-LAST:event_factorKeyReleased
+
+    private void costoiniciallempirasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costoiniciallempirasKeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_costoiniciallempirasKeyReleased
+
+    private void costoinicialdolarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costoinicialdolarKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.') || (key == '.' && costoinicialdolar.getText().contains("."))) {
+
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_costoinicialdolarKeyTyped
+
+    private void costoinicialdolarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costoinicialdolarKeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_costoinicialdolarKeyReleased
+
+    private void costoiniciallempirasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costoiniciallempirasKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        if (!(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9' || key == '.') || (key == '.' && costoiniciallempiras.getText().contains("."))) {
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_costoiniciallempirasKeyTyped
+
+    private void plazoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plazoKeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 8) {
+            if (plazo.getText().isEmpty()) {
+                plazo.setText("0.0");
+
+            }
+        }
+    }//GEN-LAST:event_plazoKeyReleased
+
+    private void codprovFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_codprovFocusLost
+        // TODO add your handling code here:
+        if (codprov.getText().isEmpty()) {
+            codprov.setText("0");
+
+        }
+        if (bd.versiesta("select proveedor from proveedor where idproveedor=" + codprov.getText() + " and cia=" + ControlSoftware.cia))
+            desprov.setText("" + bd.valor("select proveedor from proveedor where idproveedor=" + codprov.getText() + " and cia=" + ControlSoftware.cia));
+        else {
+            codprov.setText("0");
+            desprov.setText("Seleccione proveedor");
+        }
+    }//GEN-LAST:event_codprovFocusLost
+
+    private void u1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_u1FocusLost
+        // TODO add your handling code here:
+
+        if (u1.getText().isEmpty() || u1.getText().equals("-")) {
+            u1.setText("0.0");
+            p1.setText("0.0");
+        }
+    }//GEN-LAST:event_u1FocusLost
+
+    private void p1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_p1FocusLost
+        // TODO add your handling code here:
+        if (p1.getText().isEmpty() ) {
+            p1.setText("0.0");
+            u1.setText("0.0");
+        }
+    }//GEN-LAST:event_p1FocusLost
+
+    private void u2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_u2FocusLost
+        // TODO add your handling code here:
+        if (u2.getText().isEmpty() || u2.getText().equals("-")) {
+            u2.setText("0.0");
+            p2.setText("0.0");
+        }
+    }//GEN-LAST:event_u2FocusLost
+
+    private void p2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_p2FocusLost
+        // TODO add your handling code here:
+        if (p2.getText().isEmpty()) {
+            p2.setText("0.0");
+            u2.setText("0.0");
+        }
+    }//GEN-LAST:event_p2FocusLost
+
+    private void u3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_u3FocusLost
+        // TODO add your handling code here:
+        if (u3.getText().isEmpty() || u3.getText().equals("-")) {
+            u3.setText("0.0");
+            p3.setText("0.0");
+        }
+    }//GEN-LAST:event_u3FocusLost
+
+    private void p3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_p3FocusLost
+        // TODO add your handling code here:
+        if (p3.getText().isEmpty()) {
+            p3.setText("0.0");
+            u3.setText("0.0");
+        }
+    }//GEN-LAST:event_p3FocusLost
+
+    private void u4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_u4FocusLost
+        // TODO add your handling code here:
+        if (u4.getText().isEmpty() || u4.getText().equals("-")) {
+            u4.setText("0.0");
+            p4.setText("0.0");
+        }
+    }//GEN-LAST:event_u4FocusLost
+
+    private void p4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_p4FocusLost
+        // TODO add your handling code here:
+        if (p4.getText().isEmpty()) {
+            p4.setText("0.0");
+            u4.setText("0.0");
+        }
+    }//GEN-LAST:event_p4FocusLost
+
+    private void u5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_u5FocusLost
+        // TODO add your handling code here:
+        if (u5.getText().isEmpty() || u5.getText().equals("-")) {
+            u5.setText("0.0");
+            p5.setText("0.0");
+        }
+    }//GEN-LAST:event_u5FocusLost
+
+    private void p5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_p5FocusLost
+        // TODO add your handling code here:
+        if (p5.getText().isEmpty()) {
+            p5.setText("0.0");
+            u5.setText("0.0");
+        }
+    }//GEN-LAST:event_p5FocusLost
+
+    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (cantidad.getText().isEmpty() || Double.parseDouble(cantidad.getText()) == 0.00) {
+                JOptionPane.showMessageDialog(null, "No se puede agregar producto en 0!");
+                return;
+            }
+            if (costoinicialdolar.getText().isEmpty() || Double.parseDouble(costoinicialdolar.getText()) == 0.00 || costoiniciallempiras.getText().isEmpty() || Double.parseDouble(costoiniciallempiras.getText()) == 0.00 || costopromdolar.getText().isEmpty() || Double.parseDouble(costopromlempiras.getText()) == 0.00) {
+                JOptionPane.showMessageDialog(null, "No se puede agregar producto con precio 0!");
+                return;
+            }
+
+            Object[] fila = new Object[21];
+            fila[0] = idprod.getText();
+            fila[1] = "" + bd.valor("select descripcion from producto where idproducto=" + idprod.getText());
+            fila[2] = cantidad.getText();
+            fila[3] = costoiniciallempiras.getText();
+            fila[4] = costoinicialdolar.getText();
+            fila[5] = costofinallempiras.getText();
+            fila[6] = costofinaldolar.getText();
+            fila[7] = costopromlempiras.getText();
+            fila[8] = costopromdolar.getText();
+            fila[9] = u1.getText();
+            fila[10] = p1.getText();
+            fila[11] = u2.getText();
+            fila[12] = p2.getText();
+            fila[13] = u3.getText();
+            fila[14] = p3.getText();
+            fila[15] = u4.getText();
+            fila[16] = p4.getText();
+            fila[17] = u5.getText();
+            fila[18] = p5.getText();
+            fila[19] = Double.parseDouble("" + costofinallempiras.getText()) * Double.parseDouble("" + cantidad.getText());
+            fila[20] = Double.parseDouble("" + p1.getText()) * Double.parseDouble("" + cantidad.getText());
+            modelo.addRow(fila);
+            autoajustar();
+            agregar.setEnabled(false);
+            calcular();
+            limpiar();
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_agregarActionPerformed
+
+    private void calcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularActionPerformed
+        try {
+            if (Double.parseDouble("" + cantidad.getText()) < 1) {
+                JOptionPane.showMessageDialog(null, "Se debe ingresar cantidad mayor a 0");
+                return;
+            }
+            if (!(costoinicialdolar.getText().isEmpty() || costoinicialdolar.getText().isBlank() || costoiniciallempiras.getText().isEmpty() || costoiniciallempiras.getText().isBlank())) {
+                double cfd = Double.parseDouble(costoinicialdolar.getText()) + (Double.parseDouble(costoinicialdolar.getText()) * (Double.parseDouble(arancel.getText()) / 100));
+
+                costofinaldolar.setText("" + String.format("%.2f", Math.round(cfd * 100.0) / 100.0));
+                double cfl = Double.parseDouble(costoiniciallempiras.getText()) + (Double.parseDouble(costoiniciallempiras.getText()) * (Double.parseDouble(arancel.getText()) / 100));
+                double qtyparc = Double.parseDouble(cantidad.getText());
+                double cflprom = ((cl * qty) + (cfl * qtyparc)) / (qty + qtyparc);
+                costofinallempiras.setText("" + String.format("%.2f", Math.round(cfl * 100.0) / 100.0));
+                cfl = cflprom;
+                costopromlempiras.setText("" + String.format("%.2f", cfl));
+                costopromdolar.setText("" + String.format("%.2f", (cfl / Double.parseDouble(factor.getText()))));
+                double pu1 = cfl * (Double.parseDouble(u1.getText()) / 100);
+                double pu2 = cfl * (Double.parseDouble(u2.getText()) / 100);
+                double pu3 = cfl * (Double.parseDouble(u3.getText()) / 100);
+                double pu4 = cfl * (Double.parseDouble(u4.getText()) / 100);
+                double pu5 = cfl * (Double.parseDouble(u5.getText()) / 100);
+                p1.setText("" + String.format("%.0f", (cfl + pu1)));
+                p2.setText("" + String.format("%.0f", (cfl + pu2)));
+                p3.setText("" + String.format("%.0f", (cfl + pu3)));
+                p4.setText("" + String.format("%.0f", (cfl + pu4)));
+                p5.setText("" + String.format("%.0f", (cfl + pu5)));
+            }
+        } catch (Exception e) {
+
+        }
+
+    }//GEN-LAST:event_calcularActionPerformed
+
+    private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
+        // TODO add your handling code here:
+        if (detalles.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Ninguna fila seleccionada!");
+            return;
+        }
+        int selected = detalles.getSelectedRow();
+        idprod.setText("" + detalles.getValueAt(selected, 0));
+        codprod.setText("" + bd.valor("select codigo from producto where idproducto=" + idprod.getText()));
+        desprod.setText("" + bd.valor("select descripcion from producto where idproducto=" + idprod.getText()));
+        cantidad.setText("" + detalles.getValueAt(selected, 2));
+        costoinicialdolar.setText("" + detalles.getValueAt(selected, 4));
+        costoiniciallempiras.setText("" + detalles.getValueAt(selected, 3));
+        costofinaldolar.setText("" + detalles.getValueAt(selected, 6));
+        costofinallempiras.setText("" + detalles.getValueAt(selected, 5));
+        costopromdolar.setText("" + detalles.getValueAt(selected, 8));
+        costopromlempiras.setText("" + detalles.getValueAt(selected, 7));
+        u1.setText("" + detalles.getValueAt(selected, 9));
+        p1.setText("" + detalles.getValueAt(selected, 10));
+        u2.setText("" + detalles.getValueAt(selected, 11));
+        p2.setText("" + detalles.getValueAt(selected, 12));
+        u3.setText("" + detalles.getValueAt(selected, 13));
+        p3.setText("" + detalles.getValueAt(selected, 14));
+        u4.setText("" + detalles.getValueAt(selected, 15));
+        p4.setText("" + detalles.getValueAt(selected, 16));
+        u5.setText("" + detalles.getValueAt(selected, 17));
+        p5.setText("" + detalles.getValueAt(selected, 18));
+        agregar.setEnabled(true);
+        double st = Double.parseDouble(subtotal.getText());
+        double rest = Double.parseDouble("" + detalles.getValueAt(selected, 4)) * Double.parseDouble("" + detalles.getValueAt(selected, 2));
+        double ar = Double.parseDouble(arancel.getText());
+        double fac = Double.parseDouble(factor.getText());
+        subtotal.setText("" + (st - rest));
+        recargos.setText("" + ((st - rest) * (ar / 100)));
+        totald.setText("" + (Double.parseDouble(subtotal.getText()) + Double.parseDouble(recargos.getText())));
+        totall.setText("" + (Double.parseDouble(totald.getText()) * fac));
+        modelo.removeRow(selected);
+        autoajustar();
+    }//GEN-LAST:event_modificarActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        // TODO add your handling code here:
+        if (detalles.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Ninguna fila seleccionada!");
+            return;
+        }
+        int selected = detalles.getSelectedRow();
+        double st = Double.parseDouble(subtotal.getText());
+        double rest = Double.parseDouble("" + detalles.getValueAt(selected, 4)) * Double.parseDouble("" + detalles.getValueAt(selected, 2));
+        double ar = Double.parseDouble(arancel.getText());
+        double fac = Double.parseDouble(factor.getText());
+        subtotal.setText("" + (st - rest));
+        recargos.setText("" + ((st - rest) * (ar / 100)));
+        totald.setText("" + (Double.parseDouble(subtotal.getText()) + Double.parseDouble(recargos.getText())));
+        totall.setText("" + (Double.parseDouble(totald.getText()) * fac));
+        modelo.removeRow(selected);
+        autoajustar();
+    }//GEN-LAST:event_eliminarActionPerformed
+
+    private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
+        // TODO add your handling code here:
+        int input = JOptionPane.showConfirmDialog(null, "Desea confirmar la modificación de orden");
+        if (input == 0) {
+            try {
+                bd.EjecutarConsultas("delete from detalleorden where id_ordencompra=" + orden);
+                Object[] fila = new Object[21];
+                String x = "";
+
+                SimpleDateFormat Date_Format = new SimpleDateFormat("yyyy-MM-dd");
+                String saldototal = totall.getText();
+
+                if (metodo_pago.getSelectedIndex() == 1) {
+                    saldototal = "0.0";
+                }
+                bd.EjecutarConsultas("update ordencompra set nfactura='" + nfactura.getText() + "', id_proveedor='" + codprov.getText() + "', metodopago='" + metodo_pago.getSelectedIndex() + "', fecha_ingreso='" + Date_Format.format(fechaingreso.getDate()) + "', plazo='" + plazo.getText() + "', subtotal='" + subtotal.getText() + "', recargos='" + recargos.getText() + "', total_dolar='" + totald.getText() + "', total_lemp='" + totall.getText() + "', saldo='" + saldototal + "', observacion='" + observacion.getText() + "' where id_ordencompra=" + orden + " and cia=" + ControlSoftware.cia);
+
+                for (int i = 0; i < detalles.getRowCount(); i++) {
+                    for (int j = 0; j < 21; j++) {
+                        fila[j] = detalles.getValueAt(i, j);
+                    }
+                    bd.EjecutarConsultas("INSERT INTO `detalleorden`(`id_ordencompra`, `idproducto`, `cantidad`,`precioinicialL`,`precioinicialD`, `preciocompraL`, `preciocompraD`, `preciopromL`, `preciopromD`, `u1`, `p1`, `u2`, `p2`, `u3`, `p3`, `u4`, `p4`, `u5`, `p5`, `costototalL`, `preciototalL`, `cia`, `estado`, `fecha`) VALUES ('" + orden + "','" + fila[0] + "','" + fila[2] + "','" + fila[3] + "','" + fila[4] + "','" + fila[5] + "','" + fila[6] + "','" + fila[7] + "','" + fila[8] + "','" + fila[9] + "','" + fila[10] + "','" + fila[11] + "','" + fila[12] + "','" + fila[13] + "','" + fila[14] + "','" + fila[15] + "','" + fila[16] + "','" + fila[17] + "','" + fila[18] + "','" + fila[19] + "','" + fila[20] + "','" + ControlSoftware.cia + "','1'" + ", '" + Date_Format.format(fechaingreso.getDate()) + "')");
+                }
+                input = JOptionPane.showConfirmDialog(null, "Imprimir orden?");
+                if (input == 0) {
+                    OC l = new OC();
+                    Dimension internalFrameSize = l.getSize();
+                    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                    l.setLocation((screenSize.width - internalFrameSize.width) / 2,
+                            (screenSize.height - internalFrameSize.height) / 2);
+                    DESKSOFTWARE.escritorio.add(l);
+                    l.show();
+
+                    dispose();
+                    try {
+
+                        BaseDeDatos con = new BaseDeDatos();
+                        Connection conn = con.getConexion();
+                        // Cargar el reporte desde el archivo .jasper
+                        String path = "/OrdenCompra.jasper";
+                        InputStream inputStream = getClass().getResourceAsStream(path);
+                        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(inputStream);
+                        Map<String, Object> parametros = new HashMap<>();
+                        parametros.put("orden", x);
+                        parametros.put("cia", ControlSoftware.cia);
+                        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, conn);
+                        JasperViewer viewer = new JasperViewer(jasperPrint, false);
+                        viewer.setVisible(true);
+
+                    } catch (JRException ex) {
+                        System.out.println("Error al generar el reporte: " + ex.getMessage());
+                    }
+
+                } else {
+                    OC l = new OC();
+                    Dimension internalFrameSize = l.getSize();
+                    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                    l.setLocation((screenSize.width - internalFrameSize.width) / 2,
+                            (screenSize.height - internalFrameSize.height) / 2);
+                    DESKSOFTWARE.escritorio.add(l);
+                    l.show();
+
+                    dispose();
+                }
+            } catch (Exception e) {
+
+            }
+
+        }
+    }//GEN-LAST:event_confirmarActionPerformed
+
+    private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
+        // TODO add your handling code here:
+        OC l = new OC();
+        Dimension internalFrameSize = l.getSize();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        l.setLocation((screenSize.width - internalFrameSize.width) / 2,
+                (screenSize.height - internalFrameSize.height) / 2);
+        DESKSOFTWARE.escritorio.add(l);
+        l.show();
+
+        dispose();
+    }//GEN-LAST:event_regresarActionPerformed
+
+    private void idprodFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_idprodFocusLost
+        // TODO add your handling code here:
+        if (idprod.getText().isEmpty()) {
+            codprod.setText("0");
+            desprod.setText("0");
+        }
+
+        codprod.setText("" + bd.valor("select codigo from producto where idproducto=" + idprod.getText() + " and cia=" + ControlSoftware.cia));
+        desprod.setText("" + bd.valor("select descripcion from producto where idproducto=" + idprod.getText() + " and cia=" + ControlSoftware.cia));
+
+
+    }//GEN-LAST:event_idprodFocusLost
+
+    private void costoinicialdolarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_costoinicialdolarFocusLost
+        // TODO add your handling code here:
+        if (costoinicialdolar.getText().isEmpty()) {
+            costoinicialdolar.setText("0.0");
+            costoiniciallempiras.setText("0.0");
+        }
+
+        double f = Double.parseDouble("" + factor.getText()) * Double.parseDouble("" + costoinicialdolar.getText());
+        costoiniciallempiras.setText(String.format("%.2f", f));
+    }//GEN-LAST:event_costoinicialdolarFocusLost
+
+    private void costoiniciallempirasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_costoiniciallempirasFocusLost
+        // TODO add your handling code here:
+        if (costoiniciallempiras.getText().isEmpty()) {
+            costoinicialdolar.setText("0.0");
+            costoiniciallempiras.setText("0.0");
+        }
+
+        double f = Double.parseDouble("" + costoiniciallempiras.getText()) / Double.parseDouble("" + factor.getText());
+        costoinicialdolar.setText(String.format("%.2f", f));
+    }//GEN-LAST:event_costoiniciallempirasFocusLost
+
+    private void nfacturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nfacturaKeyTyped
+        // TODO add your handling code here:
+        if (nfactura.getText().length() > 254) {
+            evt.consume();
+            Toolkit.getDefaultToolkit().beep();
+        }
+
+    }//GEN-LAST:event_nfacturaKeyTyped
+
+    private void nfacturaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nfacturaKeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_nfacturaKeyPressed
+
+    private void codprovKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codprovKeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_codprovKeyPressed
+
+    private void factorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_factorKeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_factorKeyPressed
+
+    private void plazoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plazoKeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_plazoKeyPressed
+
+    private void observacionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_observacionKeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_observacionKeyPressed
+
+    private void idprodKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idprodKeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_idprodKeyPressed
+
+    private void cantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cantidadKeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_cantidadKeyPressed
+
+    private void costoinicialdolarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costoinicialdolarKeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_costoinicialdolarKeyPressed
+
+    private void costoiniciallempirasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costoiniciallempirasKeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_costoiniciallempirasKeyPressed
+
+    private void u1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u1KeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_u1KeyPressed
+
+    private void u2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u2KeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_u2KeyPressed
+
+    private void u3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u3KeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_u3KeyPressed
+
+    private void u4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u4KeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_u4KeyPressed
+
+    private void u5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_u5KeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_u5KeyPressed
+
+    private void p1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p1KeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_p1KeyPressed
+
+    private void p2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p2KeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_p2KeyPressed
+
+    private void p3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p3KeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_p3KeyPressed
+
+    private void p4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p4KeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_p4KeyPressed
+
+    private void p5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_p5KeyPressed
+        // TODO add your handling code here:
+        if ((evt.getKeyCode() == evt.VK_V)) {
+            // Evitar la acción de pegar
+            evt.consume();
+        }
+    }//GEN-LAST:event_p5KeyPressed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ModificarOC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ModificarOC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ModificarOC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ModificarOC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ModificarOC(13).setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton agg;
+    private javax.swing.JButton aggprov;
+    public static javax.swing.JButton agregar;
+    private javax.swing.JTextField arancel;
+    private javax.swing.JButton calcular;
+    private javax.swing.JTextField cantidad;
+    public static javax.swing.JTextField codprod;
+    public static javax.swing.JTextField codprov;
+    private javax.swing.JButton confirmar;
+    public static javax.swing.JTextField costofinaldolar;
+    public static javax.swing.JTextField costofinallempiras;
+    private javax.swing.JTextField costoinicialdolar;
+    private javax.swing.JTextField costoiniciallempiras;
+    public static javax.swing.JTextField costopromdolar;
+    public static javax.swing.JTextField costopromlempiras;
+    public static javax.swing.JTextField desprod;
+    public static javax.swing.JTextField desprov;
+    public static javax.swing.JTable detalles;
+    private javax.swing.JButton eliminar;
+    private javax.swing.JTextField factor;
+    private com.toedter.calendar.JDateChooser fechaingreso;
+    public static javax.swing.JTextField idprod;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JComboBox<String> metodo_pago;
+    private javax.swing.JButton modificar;
+    private javax.swing.JTextField nfactura;
+    private javax.swing.JTextArea observacion;
+    public static javax.swing.JTextField p1;
+    public static javax.swing.JTextField p2;
+    public static javax.swing.JTextField p3;
+    public static javax.swing.JTextField p4;
+    public static javax.swing.JTextField p5;
+    private javax.swing.JTextField plazo;
+    private javax.swing.JTextField recargos;
+    private javax.swing.JButton regresar;
+    private javax.swing.JTextField subtotal;
+    private javax.swing.JTextField totald;
+    private javax.swing.JTextField totall;
+    public static javax.swing.JTextField u1;
+    public static javax.swing.JTextField u2;
+    public static javax.swing.JTextField u3;
+    public static javax.swing.JTextField u4;
+    public static javax.swing.JTextField u5;
+    // End of variables declaration//GEN-END:variables
+}

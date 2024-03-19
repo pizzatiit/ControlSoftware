@@ -1,0 +1,255 @@
+
+ˆ
+java:S1192:"mDefine a constant instead of duplicating this literal "select nombre from clientes where idcliente=" 3 times.(È”Úıÿÿÿÿ
+f
+java:S11920"KDefine a constant instead of duplicating this literal "seleccione" 3 times.(Ÿ‡é©şÿÿÿÿ
+e
+java:S1192:"JDefine a constant instead of duplicating this literal " and cia=" 5 times.(È”Úıÿÿÿÿ
+b
+java:S1192¤"KDefine a constant instead of duplicating this literal "SansSerif" 10 times.( ßÙ‰
+†
+java:S1192A"kDefine a constant instead of duplicating this literal "select saldo from factura where idfactura=" 3 times.(åóˆÑşÿÿÿÿ
+f
+java:S1192@"KDefine a constant instead of duplicating this literal " and cia=0" 3 times.(ß±ö±ÿÿÿÿÿ
+F
+java:S1066Í"/Merge this if statement with the enclosing one.(çˆá×
+g	java:S117ó"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ì‘ı‹
+?
+java:S1604È"(Make this anonymous inner class a lambda(ı’àÇ
+?
+java:S1604Ù"(Make this anonymous inner class a lambda(òõ»Ü
+?
+java:S1604ñ"(Make this anonymous inner class a lambda(Ò‚Ú©
+D
+java:S1604ı"(Make this anonymous inner class a lambda(…æ©âÿÿÿÿÿ
+D
+java:S1604°"(Make this anonymous inner class a lambda(ìöµ›ıÿÿÿÿ
+?
+java:S1604Ä"(Make this anonymous inner class a lambda(ˆ’¡Ÿ
+D
+java:S1604Ñ"(Make this anonymous inner class a lambda(¨í¡§úÿÿÿÿ
+k
+java:S1104Ù"TMake REGRESAR a static final constant or non-public and provide accessors if needed.(¿ŒÈª
+l
+java:S1104Ú"PMake clie a static final constant or non-public and provide accessors if needed.(ÄŸâıÿÿÿÿ
+r
+java:S1104Û"VMake codcliente a static final constant or non-public and provide accessors if needed.(¯à›Äøÿÿÿÿ
+m
+java:S1104Ü"VMake descliente a static final constant or non-public and provide accessors if needed.(Ü«“¤
+s
+java:S1104İ"WMake descripcion a static final constant or non-public and provide accessors if needed.(ú¬öıÿÿÿÿ
+h
+java:S1104Ş"QMake fecha a static final constant or non-public and provide accessors if needed.(å—ù¬
+n
+java:S1104ß"RMake gtotal a static final constant or non-public and provide accessors if needed.(õ¬‚®şÿÿÿÿ
+k
+java:S1104à"TMake jButton1 a static final constant or non-public and provide accessors if needed.(×¼£ï
+j
+java:S1104í"SMake nrecibo a static final constant or non-public and provide accessors if needed.(üßğÚ
+o
+java:S1104î"SMake recibos a static final constant or non-public and provide accessors if needed.(œ…†œÿÿÿÿÿ
+l
+java:S1104ï"PMake vend a static final constant or non-public and provide accessors if needed.(¤Ğ„Öûÿÿÿÿ
+E
+java:S1444Ù".Make this "public static REGRESAR" field final(¿ŒÈª
+F
+java:S1444Ú"*Make this "public static clie" field final(ÄŸâıÿÿÿÿ
+L
+java:S1444Û"0Make this "public static codcliente" field final(¯à›Äøÿÿÿÿ
+G
+java:S1444Ü"0Make this "public static descliente" field final(Ü«“¤
+M
+java:S1444İ"1Make this "public static descripcion" field final(ú¬öıÿÿÿÿ
+B
+java:S1444Ş"+Make this "public static fecha" field final(å—ù¬
+H
+java:S1444ß",Make this "public static gtotal" field final(õ¬‚®şÿÿÿÿ
+E
+java:S1444à".Make this "public static jButton1" field final(×¼£ï
+D
+java:S1444í"-Make this "public static nrecibo" field final(üßğÚ
+I
+java:S1444î"-Make this "public static recibos" field final(œ…†œÿÿÿÿÿ
+F
+java:S1444ï"*Make this "public static vend" field final(¤Ğ„Öûÿÿÿÿ
+b	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(¸Î‚Õ
+j
+java:S3008Ù"SRename this field "REGRESAR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿ŒÈª
+s
+java:S1450á"WRemove the "jLabel10" field and declare it as a local variable in the relevant methods.(¼õò†şÿÿÿÿ
+s
+java:S1450â"WRemove the "jLabel11" field and declare it as a local variable in the relevant methods.(‰Ó‚©øÿÿÿÿ
+n
+java:S1450ã"WRemove the "jLabel17" field and declare it as a local variable in the relevant methods.(„Ç›Ä
+r
+java:S1450ä"VRemove the "jLabel2" field and declare it as a local variable in the relevant methods.(™úòˆüÿÿÿÿ
+s
+java:S1450å"WRemove the "jLabel20" field and declare it as a local variable in the relevant methods.(ëƒß›úÿÿÿÿ
+r
+java:S1450æ"VRemove the "jLabel3" field and declare it as a local variable in the relevant methods.(Îä€øÿÿÿÿ
+m
+java:S1450ç"VRemove the "jLabel4" field and declare it as a local variable in the relevant methods.(«¢•ã
+r
+java:S1450è"VRemove the "jPanel2" field and declare it as a local variable in the relevant methods.(õ òçüÿÿÿÿ
+r
+java:S1450é"VRemove the "jPanel4" field and declare it as a local variable in the relevant methods.(§É†¬şÿÿÿÿ
+m
+java:S1450ê"VRemove the "jPanel5" field and declare it as a local variable in the relevant methods.(³¡©ú
+w
+java:S1450ë"[Remove the "jScrollPane1" field and declare it as a local variable in the relevant methods.(¤á×ÿÿÿÿÿ
+w
+java:S1450ì"[Remove the "jScrollPane2" field and declare it as a local variable in the relevant methods.(ŠÌ«·şÿÿÿÿ
+?
+java:S1948$"$Make "bd" transient or serializable.(ªÁ¡ãşÿÿÿÿ
+h
+java:S3776'"RRefactor this method to reduce its Cognitive Complexity from 43 to the 15 allowed.(£­ªç
+9
+java:S3010,"#Remove this assignment of "modelo".(¤ÒÒ‡
+E
+java:S1197;"*Move the array designators [] to the type.(åæÇûÿÿÿÿ
+V	java:S125H"<This block of commented-out lines of code should be removed.(¯ıŞøÿÿÿÿ
+C	java:S108r")Either remove or fill this block of code.(Íæè½ùÿÿÿÿ
+R
+java:S2696Š"6Make the enclosing method "static" or remove this set.( ûßÜüÿÿÿÿ
+L
+java:S2696"6Make the enclosing method "static" or remove this set.(šã”]
+M
+java:S2696"6Make the enclosing method "static" or remove this set.(•×
+R
+java:S2696"6Make the enclosing method "static" or remove this set.(½—ñ²şÿÿÿÿ
+M
+java:S2696’"6Make the enclosing method "static" or remove this set.(º¼àÒ
+R
+java:S2696“"6Make the enclosing method "static" or remove this set.(âéàşÿÿÿÿ
+R
+java:S2696”"6Make the enclosing method "static" or remove this set.(À¸êÅüÿÿÿÿ
+M
+java:S2696•"6Make the enclosing method "static" or remove this set.(à‘íì
+R
+java:S2696—"6Make the enclosing method "static" or remove this set.(Ì‡ûÿÿÿÿ
+M
+java:S2696š"6Make the enclosing method "static" or remove this set.(ËÀğ§
+R
+java:S2696›"6Make the enclosing method "static" or remove this set.(±±êÃüÿÿÿÿ
+V
+java:S1161ª":Add the "@Override" annotation above this method signature(óÚ°ùÿÿÿÿ
+V
+java:S1161­":Add the "@Override" annotation above this method signature(Õş°ıüÿÿÿÿ
+Q
+java:S1161Â":Add the "@Override" annotation above this method signature(®¸ù
+Q
+java:S1161Î":Add the "@Override" annotation above this method signature(†ŒË³
+
+java:S1186Ó"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(÷¨¸èıÿÿÿÿ
+V
+java:S1161ß":Add the "@Override" annotation above this method signature(óÚ°ùÿÿÿÿ
+V
+java:S1161â":Add the "@Override" annotation above this method signature(Õş°ıüÿÿÿÿ
+V
+java:S1161‡":Add the "@Override" annotation above this method signature(óÚ°ùÿÿÿÿ
+V
+java:S1161Š":Add the "@Override" annotation above this method signature(Õş°ıüÿÿÿÿ
+Q
+java:S1161‘":Add the "@Override" annotation above this method signature(±“‚Æ
+Q
+java:S1161–":Add the "@Override" annotation above this method signature(†ŒË³
+V
+java:S1161™":Add the "@Override" annotation above this method signature(™ÅšÊûÿÿÿÿ
+V
+java:S1161œ":Add the "@Override" annotation above this method signature(Œïêûÿÿÿÿ
+V
+java:S1161¡":Add the "@Override" annotation above this method signature(óÚ°ùÿÿÿÿ
+V
+java:S1161¤":Add the "@Override" annotation above this method signature(ŠÖô„øÿÿÿÿ
+V
+java:S1161§":Add the "@Override" annotation above this method signature(Õş°ıüÿÿÿÿ
+W
+java:S3252Ì"@Use static access with "javax.swing.SwingConstants" for "RIGHT".(‹‚ğØ
+A
+java:S1172Ë"*Remove this unused method parameter "evt".(æœœÄ
+N
+java:S1135Ì"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+i
+java:S3776Ğ"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(‚À‡ä
+A
+java:S1172Ğ"*Remove this unused method parameter "evt".(‚À‡ä
+N
+java:S1135Ñ"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+]
+java:S1075’"ARefactor your code to get this URI from a customizable parameter.(©šçùÿÿÿÿ
+F	java:S106 "+Replace this use of System.out by a logger.(ÍŞş¼ıÿÿÿÿ
+i	java:S100¤"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢×Âåşÿÿÿÿ
+F
+java:S1172¤"*Remove this unused method parameter "evt".(¢×Âåşÿÿÿÿ
+N
+java:S1135¥"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+A
+java:S1172²"*Remove this unused method parameter "evt".(ã‚ì¬
+N
+java:S1135³"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+A
+java:S1172¾"*Remove this unused method parameter "evt".(ÖµÙŠ
+N
+java:S1135¿"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172Â"*Remove this unused method parameter "evt".(ÄÒê’ıÿÿÿÿ
+N
+java:S1135Ã"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172Æ"*Remove this unused method parameter "evt".(„¹±Èûÿÿÿÿ
+N
+java:S1135Ç"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+N
+java:S1135Õ"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172Ü"*Remove this unused method parameter "evt".(Í”ığùÿÿÿÿ
+N
+java:S1135İ"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172è"*Remove this unused method parameter "evt".(ÉúôÕıÿÿÿÿ
+N
+java:S1135é"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172ì"*Remove this unused method parameter "evt".(ôĞóšúÿÿÿÿ
+N
+java:S1135í"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+N
+java:S1135ò"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172ı"*Remove this unused method parameter "evt".(×ãûÿşÿÿÿÿ
+N
+java:S1135ş"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+A
+java:S1172‚"*Remove this unused method parameter "evt".(ş¥µ©
+N
+java:S1135ƒ"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172†"*Remove this unused method parameter "evt".(Ü‰‘¢øÿÿÿÿ
+N
+java:S1135‡"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172Š"*Remove this unused method parameter "evt".(Æ‹Ú©ÿÿÿÿÿ
+N
+java:S1135‹"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+N
+java:S1135"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+Q
+java:S2209‘"5Change this instance-reference to a static reference.(¹¿¡±üÿÿÿÿ
+N
+java:S1135™"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+Q
+java:S2209š"5Change this instance-reference to a static reference.(¹¿¡±üÿÿÿÿ
+N
+java:S1135¢"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+Q
+java:S2209£"5Change this instance-reference to a static reference.(¹¿¡±üÿÿÿÿ
+N
+java:S1135«"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1197µ"*Move the array designators [] to the type.(¡şÏÖøÿÿÿÿ
+\
+java:S2147Ä"ECombine this catch with the one at line 706, which has the same body.(¨¦Š½
+\
+java:S2147Æ"ECombine this catch with the one at line 708, which has the same body.(ã€ 
+[
+java:S2147È"ECombine this catch with the one at line 710, which has the same body.(ñÎ¯%

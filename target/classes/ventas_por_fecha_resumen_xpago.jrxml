@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3a47a853-b59d-4141-b435-2d0ed57884a3">
+	<property name="ireport.zoom" value="1.0000000000000007"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="22"/>
+	<parameter name="dfecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hfecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipo1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipo2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="metodo1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="metodo2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[WITH total_factura AS (
+    SELECT 
+        df.idfactura,  
+        SUM(df.costo * df.cantidad) AS costo_total, 
+        SUM(df.cantidad * df.preciovendido - ((df.cantidad*df.preciovendido/f.total)*f.descuento)) AS total_factura
+    FROM 
+        detalle_factura df 
+    inner join factura f on f.idfactura=df.idfactura
+    INNER JOIN 
+        producto p ON p.idproducto = df.idproducto 
+ 
+    WHERE 
+        df.cia =  1
+    GROUP BY 
+        df.idfactura
+       
+),
+total_devolucion AS (
+    SELECT 
+        d.id_factura,   
+        SUM(p.preciocompra * dd.cantidad) AS costo_devolucion,
+        SUM(dd.cantidad * dd.precio - ((dd.cantidad*dd.precio/f.total)*f.descuento)) AS total_devolucion
+    FROM 
+        devoluciones d 
+   inner join factura f on f.idfactura=d.id_factura
+    INNER JOIN 
+        detalle_devolucion dd ON dd.id_devolucion = d.id_devolucion 
+    INNER JOIN 
+        producto p ON p.idproducto = dd.id_producto 
+ 
+where d.estado!=0
+    GROUP BY 
+        d.id_factura
+        
+),
+final as (
+SELECT 
+    tf.idfactura, 
+    tf.costo_total AS costo,
+    tf.total_factura AS total,
+    COALESCE(td.costo_devolucion, 0) AS costod,
+    COALESCE(td.total_devolucion, 0) AS totald
+FROM 
+    total_factura tf
+LEFT JOIN total_devolucion td ON tf.idfactura = td.id_factura  
+group by idfactura
+)
+
+select v.vendedor, 
+count(f.idfactura), 
+sum(df.costo) as costo, 
+sum(df.costod) as costod, 
+c.company, 
+c.img,
+(sum(df.total))-sum(df.costo) as utility,
+(sum(df.totald))-sum(df.costod) as utilityd,
+(sum(df.total)) as ventas, 
+(sum(df.totald)) as ventasd,
+(sum(df.total))/1.15 as vendidoaimp, 
+(sum(df.totald))/1.15 as vendidoaimpd,
+TRUNCATE(((SUM(df.total)) - SUM(df.costo)) / ((SUM(df.total)) + 0.001) * 100, 2) AS margen,
+    TRUNCATE((((SUM(df.total)) / SUM(df.costo) + 0.001) - 1) * 100, 2) AS incremento
+from factura f 
+inner join final df on df.idfactura=f.idfactura 
+inner join vendedor v on v.id_vendedor = f.idvendedor 
+inner join company c  on c.id_company =f.cia 
+where f.tipo between $P{tipo1} and $P{tipo2} and f.fechapago between $P{dfecha} and $P{hfecha} and f.condicionpago between $P{metodo1} and $P{metodo2} and f.cia=$P{cia}
+group by f.idvendedor
+order by utility desc]]>
+	</queryString>
+	<field name="vendedor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="count(f.idfactura)" class="java.lang.Long"/>
+	<field name="costo" class="java.lang.Double"/>
+	<field name="costod" class="java.lang.Double"/>
+	<field name="company" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="img" class="java.io.InputStream">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="utility" class="java.lang.Double"/>
+	<field name="utilityd" class="java.lang.Double"/>
+	<field name="ventas" class="java.lang.Double"/>
+	<field name="ventasd" class="java.lang.Double"/>
+	<field name="vendidoaimp" class="java.lang.Double"/>
+	<field name="vendidoaimpd" class="java.lang.Double"/>
+	<field name="margen" class="java.math.BigDecimal"/>
+	<field name="incremento" class="java.math.BigDecimal"/>
+	<variable name="count(f.idfactura)_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{count(f.idfactura)}]]></variableExpression>
+	</variable>
+	<variable name="costo_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{costo}]]></variableExpression>
+	</variable>
+	<variable name="ventas_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ventas}]]></variableExpression>
+	</variable>
+	<variable name="vendidoaimp_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{vendidoaimp}]]></variableExpression>
+	</variable>
+	<variable name="variable1" class="java.lang.Double">
+		<variableExpression><![CDATA[(((($F{ventas}-$F{ventasd})-($F{costo}-$F{costod}))/($F{ventas}-$F{ventasd})))]]></variableExpression>
+	</variable>
+	<variable name="variable2" class="java.lang.Double">
+		<variableExpression><![CDATA[(($F{ventas}-$F{ventasd})/((($F{costo}-$F{costod})+0.00000001)))-1]]></variableExpression>
+	</variable>
+	<variable name="costod_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{costod}]]></variableExpression>
+	</variable>
+	<variable name="ventasd_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ventasd}]]></variableExpression>
+	</variable>
+	<variable name="vendidoaimpd_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{vendidoaimpd}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="106" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="570" height="104" uuid="335ed6ac-0676-4723-bd90-356258011b6c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="51" width="468" height="27" backcolor="#0E1E6C" uuid="1ceeeb6a-0567-447a-b907-2e3c94605377"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="78" width="249" height="20" uuid="fcf8c9d9-6246-4d36-883d-6eba56c58b72">
+					<printWhenExpression><![CDATA[$P{tipo1}.equals( "0" ) && 
+$P{tipo2}.equals( "1" ) && 
+$P{metodo1}.equals( "0" ) && 
+$P{metodo2}.equals( "0" )]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[FACTURAS ORIGINALES - PROFORMA - CREDITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="78" width="28" height="20" forecolor="#000000" uuid="2b8f2676-a4f3-4a23-81d3-a2d78409f3ee"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="500" y="78" width="60" height="20" uuid="7c3ef792-d0c4-434b-bb4f-7a0082917b2e"/>
+				<textFieldExpression><![CDATA[$P{hfecha}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="491" y="10" width="69" height="43" uuid="32a83e8e-7e93-4d5e-81b9-b85caae58859"/>
+				<imageExpression><![CDATA[$F{img}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="483" y="78" width="17" height="20" forecolor="#000000" uuid="05c6044c-f64c-42f2-8791-6b8d4f962968"/>
+				<text><![CDATA[AL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="54" width="299" height="20" forecolor="#FFFFFF" uuid="989d2f41-14ee-48e6-b3ca-daa5c973a042"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="10" width="481" height="40" uuid="939baf51-fe9b-4b5f-aa8b-af67f0fba346"/>
+				<textElement>
+					<font fontName="Serif" size="23"/>
+				</textElement>
+				<text><![CDATA[RESUMEN DE VENTAS POR FECHA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="422" y="78" width="61" height="20" uuid="1d089736-0266-4590-8e1a-537d9e1450b9"/>
+				<textFieldExpression><![CDATA[$P{dfecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="78" width="178" height="20" uuid="1f6e4115-ec37-40bc-8439-dab77d39808e">
+					<printWhenExpression><![CDATA[$P{tipo1}.equals( "0" ) && 
+$P{tipo2}.equals( "0" ) && 
+$P{metodo1}.equals( "0" ) && 
+$P{metodo2}.equals( "0" )]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[FACTURAS PROFORMA - CREDITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="78" width="249" height="20" uuid="a1a38111-d51d-449e-bc07-26f95ed1a80d">
+					<printWhenExpression><![CDATA[$P{tipo1}.equals( "0" ) && 
+$P{tipo2}.equals( "1" ) && 
+$P{metodo1}.equals( "1" ) && 
+$P{metodo2}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[FACTURAS ORIGINALES - PROFORMA - CONTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="78" width="178" height="20" uuid="07fbdd2a-2390-4f80-bc13-c5d209b37198">
+					<printWhenExpression><![CDATA[$P{tipo1}.equals( "0" ) && 
+$P{tipo2}.equals( "0" ) && 
+$P{metodo1}.equals( "1" ) && 
+$P{metodo2}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[FACTURAS PROFORMA - CONTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="78" width="195" height="20" uuid="653e8474-f779-406f-b42a-f6caaa7894dc">
+					<printWhenExpression><![CDATA[$P{tipo1}.equals( "1" ) && 
+$P{tipo2}.equals( "1" ) && 
+$P{metodo1}.equals( "1" ) && 
+$P{metodo2}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[FACTURAS ORIGINALES - CONTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="78" width="186" height="20" uuid="987e1c2b-2583-4790-a7f9-e36319a59f44">
+					<printWhenExpression><![CDATA[$P{tipo1}.equals( "1" ) && 
+$P{tipo2}.equals( "1" ) && 
+$P{metodo1}.equals( "0" ) && 
+$P{metodo2}.equals( "0" )]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[FACTURAS ORIGINALES - CREDITO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="3" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="114" y="0" width="59" height="31" uuid="40e4d201-6cbc-420d-b09b-a4903914139f"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD FACTURAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="0" width="78" height="31" uuid="34e5fd6d-f571-408b-bbd7-039e8100d9b8"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VENTAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="173" y="0" width="90" height="31" uuid="4c6535f8-615d-4b3a-8521-f8ad735768d1"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COSTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="113" height="20" uuid="61f5827d-a19c-40d4-8b61-9a6ff0916b6b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VENDEDORES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="0" width="76" height="31" uuid="44b2758a-1cf4-445f-8cc4-6ed7a5df3f74"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MARGEN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="341" y="0" width="78" height="31" uuid="200dda02-adc6-4f13-bed2-08da60ffdd2d"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VENDIDO A/IMP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="495" y="0" width="76" height="31" uuid="8d02a91e-6968-4e71-9039-daa75c5861d7"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[INCREMENTO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="63" splitType="Stretch">
+			<textField pattern="###0.00">
+				<reportElement x="114" y="0" width="59" height="20" uuid="c5a3976e-610d-4371-9112-8ca2254af510"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{count(f.idfactura)}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="173" y="0" width="90" height="20" uuid="a85d557d-8363-4f5c-962b-73cbecf935af"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{costo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="263" y="0" width="78" height="20" uuid="e0cc9d21-aea6-41f4-8158-c0bbe92637c4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ventas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="341" y="0" width="78" height="20" uuid="60a9da0c-42f7-4957-8d1c-1cf13ac97eac"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{vendidoaimp}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="419" y="0" width="76" height="20" uuid="01c24563-1f2d-4db3-a9c3-3c390d04a184"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[""+$F{margen}+"%"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="495" y="0" width="77" height="20" uuid="ce006730-4c2d-4ca6-abbd-c4422c695af7"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[""+$F{incremento}+"%"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="113" height="20" uuid="6591abe0-2c4d-4815-971d-a82213565a31"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{vendedor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="173" y="20" width="90" height="20" uuid="c2c6244a-ae38-46c7-a358-9142e75fe58c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{costod}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="263" y="20" width="78" height="20" uuid="0aada8fa-4413-4945-9595-5b1e2fe70094"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ventasd}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="60" y="20" width="113" height="20" uuid="3ac5fd92-006a-4dd1-99be-c41532053070"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEVOLUCIONES]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="341" y="20" width="78" height="20" uuid="27f542be-ae23-48bd-94c1-67ae6fab2313"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{vendidoaimpd}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="60" y="40" width="113" height="20" uuid="b2a0e8ec-39df-48d7-bd26-e2adf754da97"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[GRAN TOTAL]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="341" y="40" width="78" height="20" uuid="d6b34457-2d65-4b69-9cf6-86cd30bf0e70"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{vendidoaimp}-$F{vendidoaimpd}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="173" y="40" width="90" height="20" uuid="50501f7e-5bdc-4e0c-828a-f7f4071d07cb"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{costo}-$F{costod}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="263" y="40" width="78" height="20" uuid="b39ad47b-87a7-434a-b5a1-c615498ac7a9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ventas}-$F{ventasd}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 %">
+				<reportElement x="419" y="40" width="76" height="20" uuid="e6a374e3-6d5a-4822-a635-c2228222137a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{variable1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 %">
+				<reportElement x="495" y="40" width="77" height="20" uuid="581b98a5-7bad-4da4-900e-2a801b0b4c2b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{variable2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="3" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="4" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="383" splitType="Stretch">
+			<textField pattern="###0.00">
+				<reportElement x="114" y="2" width="59" height="20" uuid="170f6817-15c3-4770-86d6-c593f0717fee"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{count(f.idfactura)_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="173" y="3" width="90" height="20" uuid="6145fcdd-f561-4643-8132-42976042399d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{costo_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="263" y="3" width="78" height="20" uuid="dea3360a-2f43-43cc-ae06-06d855259b24"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{ventas_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="341" y="3" width="78" height="20" uuid="d91c1a54-144c-4cf1-b0dd-8cf9be382afa"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{vendidoaimp_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="3" width="114" height="20" uuid="7d89981d-0331-4212-977d-73e83a88fb20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="2" width="569" height="1" uuid="f5ef5028-7ddd-4dc5-8877-dbc297eb6c7b"/>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="173" y="23" width="90" height="20" uuid="329a0154-118f-49f6-9117-87549df5308f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{costod_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="263" y="23" width="78" height="20" uuid="b4309b9f-e140-4036-bcbd-c9cf8de9363e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{ventasd_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="341" y="23" width="78" height="20" uuid="627dba1d-057d-4045-9ee5-2ce22186f69a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{vendidoaimpd_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="173" y="43" width="90" height="20" uuid="d822200e-b400-44ad-a51e-d399a0916b82"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{costo_1}-$V{costod_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="263" y="43" width="78" height="20" uuid="02f6fdcb-2f18-402f-b598-9fb95a75d8ef"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{ventas_1}-$V{ventasd_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="341" y="43" width="78" height="20" uuid="139fa7f0-0402-417d-b0d1-edd8de85152c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{vendidoaimp_1}-$V{vendidoaimpd_1}]]></textFieldExpression>
+			</textField>
+			<barChart>
+				<chart>
+					<reportElement x="0" y="63" width="572" height="316" uuid="64657f90-e719-4666-89ac-e3f96bbab359"/>
+					<chartTitle position="Top"/>
+					<chartSubtitle/>
+					<chartLegend position="Bottom"/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["COSTO"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{vendedor}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{costo}-$F{costod}]]></valueExpression>
+						<labelExpression><![CDATA[" "+$F{costo}-$F{costod}]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["VENTAS"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{vendedor}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{ventas}-$F{ventasd}]]></valueExpression>
+						<labelExpression><![CDATA[" "+ $F{ventas}-$F{ventasd}]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["UTILIDAD"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{vendedor}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{utility}-$F{utilityd}]]></valueExpression>
+						<labelExpression><![CDATA[" "+$F{utility}-$F{utilityd}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot labelRotation="-90.0"/>
+					<itemLabel/>
+					<categoryAxisFormat labelRotation="-90.0">
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat verticalTickLabels="false"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="354c906a-dd98-4d2d-87a3-b64078b0d8b1">
+	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="orden" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select pv.proveedor, c.company, c.img, o.fecha_ingreso, p.codigo, p.descripcion, p.existencia, p.preciocompra, p.costoenletras, p.precio1,p.precio2, p.precio3, ((p.precio1/p.preciocompra)-1)*100 as utilidad from producto p inner join  detalleorden d on d.idproducto=p.idproducto inner join ordencompra o on o.id_ordencompra= d.id_ordencompra inner join company c on c.id_company=o.cia inner join proveedor pv on pv.idproveedor=o.id_proveedor where o.id_ordencompra=$P!{orden} and d.cia=$P!{cia}]]>
+	</queryString>
+	<field name="proveedor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="company" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="img" class="java.io.InputStream">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_ingreso" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="existencia" class="java.lang.Object">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="preciocompra" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="costoenletras" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio1" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio2" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio3" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="utilidad" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="6" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="112" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="1" y="4" width="751" height="105" uuid="9a684826-3c59-4009-9066-af7d77695a6f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="23" y="11" width="459" height="47" uuid="543d328a-ef9c-43de-b99c-2f70d74fcc1a"/>
+				<textElement>
+					<font fontName="Serif" size="30"/>
+				</textElement>
+				<text><![CDATA[REPORTE PRODUCTOS NUEVOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="23" y="62" width="386" height="20" uuid="93dd5b47-fe0c-4054-b52f-12c535f64800"/>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="616" y="85" width="127" height="20" uuid="c65f48a3-ceef-4c04-957b-4b8f95abe76f"/>
+				<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="674" y="11" width="69" height="43" uuid="81872af1-d409-4fc5-9107-f555320b5a9d"/>
+				<imageExpression><![CDATA[$F{img}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="4" width="142" height="20" uuid="1b546261-0f70-4260-83d7-df6280ab04c0"/>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="146" y="4" width="237" height="20" uuid="5dab85f6-c5a8-40e3-8574-f00b30f19ab1"/>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="499" y="4" width="73" height="20" uuid="76751867-41b4-4509-9f5f-4e9cd6687899"/>
+				<text><![CDATA[PRECIO 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="583" y="4" width="79" height="20" uuid="bdfe7cd5-d81b-4908-ae15-af6aba1923e8"/>
+				<text><![CDATA[PRECIO 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="668" y="4" width="75" height="20" uuid="f5ebbea3-5e19-49a7-93f1-f447cac20629"/>
+				<text><![CDATA[PRECIO 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="4" width="100" height="20" uuid="fe109b0f-5d0b-4857-b680-02f1046a9527"/>
+				<text><![CDATA[EXISTENCIA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="4" width="142" height="20" uuid="d19ac7c0-da7b-4be3-a4c0-1fefeb77a559"/>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="146" y="4" width="237" height="20" uuid="81061c8a-236f-4e71-b826-2d9193f43397"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="499" y="4" width="73" height="20" uuid="fe912645-889b-4361-89f0-c760869c545e"/>
+				<textFieldExpression><![CDATA[$F{precio1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="583" y="4" width="79" height="20" uuid="544813e4-57b7-47d9-9d9d-19c9740d78b2"/>
+				<textFieldExpression><![CDATA[$F{precio2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="668" y="4" width="75" height="20" uuid="7a3bfeff-18ba-4e2b-81d7-fe4cdb138788"/>
+				<textFieldExpression><![CDATA[$F{precio3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="4" width="100" height="20" uuid="9e76c28f-1c81-4204-8a79-26cd57d3922e"/>
+				<textFieldExpression><![CDATA[$F{existencia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="16" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="100" height="20" uuid="b75ec41e-d1a7-44d2-9194-e65ae37f66cd"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="652" y="0" width="100" height="20" uuid="5c235d9c-195c-46ad-b169-c0a41b9a03c1"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aa5fe880-326d-419d-a8cb-ad9dfb18b7dd">
+	<property name="ireport.zoom" value="1.1000000000000112"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="user" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select c.idcliente, f.numerofactura, f.total, f.fechafactura, f.saldo, co.company, co.img, c.nombre, DATE_ADD(f.fechafactura, INTERVAL c.diaslimite DAY) AS fecha_vence,
+if(DATEDIFF(CURRENT_DATE(), f.fechafactura)>c.diaslimite,f.saldo,0.00) as saldo_vencido, 
+if(DATEDIFF(CURRENT_DATE(), f.fechafactura)<=c.diaslimite,f.saldo,0.00) as saldo_novencido, 
+if(DATEDIFF(CURRENT_DATE(), f.fechafactura) between 0 and 30,f.saldo,0.00) as saldoa30,
+if(DATEDIFF(CURRENT_DATE(), f.fechafactura) between 31 and 45,f.saldo,0.00) as saldoa45,
+if(DATEDIFF(CURRENT_DATE(), f.fechafactura) between 46 and 60,f.saldo,0.00) as saldoa60
+,
+if(DATEDIFF(CURRENT_DATE(), f.fechafactura) between 61 and 60,f.saldo,0.00) as saldoa90
+,
+if(DATEDIFF(CURRENT_DATE(), f.fechafactura)>90,f.saldo,0.00) as saldomas90,
+v.vendedor, g.id_vendedor 
+from factura f inner join company co on co.id_company=f.cia inner join clientes c on c.idcliente=f.idcliente inner join gira g on g.id_gira=c.gira inner join vendedor v on v.id_vendedor=g.id_vendedor where f.cia=$P{cia} AND F.SALDO>0 and g.id_vendedor between $P!{p1} and $P!{p2} order by g.id_vendedor]]>
+	</queryString>
+	<field name="idcliente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numerofactura" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechafactura" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="saldo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="company" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="img" class="java.io.InputStream">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_vence" class="java.sql.Date"/>
+	<field name="saldo_vencido" class="java.math.BigDecimal"/>
+	<field name="saldo_novencido" class="java.math.BigDecimal"/>
+	<field name="saldoa30" class="java.math.BigDecimal"/>
+	<field name="saldoa45" class="java.math.BigDecimal"/>
+	<field name="saldoa60" class="java.math.BigDecimal"/>
+	<field name="saldoa90" class="java.math.BigDecimal"/>
+	<field name="saldomas90" class="java.math.BigDecimal"/>
+	<field name="vendedor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_vendedor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="saldo_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+	</variable>
+	<variable name="saldo_vencido_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_vencido}]]></variableExpression>
+	</variable>
+	<variable name="saldo_novencido_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_novencido}]]></variableExpression>
+	</variable>
+	<variable name="saldoa30_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldoa30}]]></variableExpression>
+	</variable>
+	<variable name="saldoa45_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldoa45}]]></variableExpression>
+	</variable>
+	<variable name="saldoa60_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldoa60}]]></variableExpression>
+	</variable>
+	<variable name="saldoa90_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldoa90}]]></variableExpression>
+	</variable>
+	<variable name="saldomas90_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldomas90}]]></variableExpression>
+	</variable>
+	<variable name="saldo_2" class="java.math.BigDecimal" resetType="Group" resetGroup="gira" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+	</variable>
+	<variable name="saldo_vencido_2" class="java.math.BigDecimal" resetType="Group" resetGroup="gira" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_vencido}]]></variableExpression>
+	</variable>
+	<variable name="saldo_novencido_2" class="java.math.BigDecimal" resetType="Group" resetGroup="gira" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_novencido}]]></variableExpression>
+	</variable>
+	<variable name="saldoa30_2" class="java.math.BigDecimal" resetType="Group" resetGroup="gira" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldoa30}]]></variableExpression>
+	</variable>
+	<variable name="saldoa45_2" class="java.math.BigDecimal" resetType="Group" resetGroup="gira" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldoa45}]]></variableExpression>
+	</variable>
+	<variable name="saldoa60_2" class="java.math.BigDecimal" resetType="Group" resetGroup="gira" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldoa60}]]></variableExpression>
+	</variable>
+	<variable name="saldoa90_2" class="java.math.BigDecimal" resetType="Group" resetGroup="gira" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldoa90}]]></variableExpression>
+	</variable>
+	<variable name="saldomas90_2" class="java.math.BigDecimal" resetType="Group" resetGroup="gira" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldomas90}]]></variableExpression>
+	</variable>
+	<group name="gira">
+		<groupExpression><![CDATA[$F{id_vendedor}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<line>
+					<reportElement x="0" y="28" width="752" height="1" uuid="671f6fdb-2978-4274-90f2-6a093a3a14b6"/>
+				</line>
+				<textField>
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="1" width="279" height="25" uuid="f486441b-8279-404f-b122-46bead884aa3"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{vendedor}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<line>
+					<reportElement x="0" y="3" width="752" height="1" uuid="5c0c0cf6-be4f-4370-ba89-bc15e9ca8c68"/>
+				</line>
+				<textField>
+					<reportElement x="293" y="4" width="50" height="20" uuid="b7e4a9df-a4eb-4628-983c-19e102a36442"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{saldo_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="344" y="4" width="55" height="20" uuid="761f1297-d03d-474e-8aee-b50ad903ff13"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{saldo_vencido_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="399" y="4" width="61" height="20" uuid="0ce6bc79-42b8-4ae0-9605-947c478949c4"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{saldo_novencido_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="462" y="4" width="59" height="20" uuid="52ca9870-e1ba-4832-84c2-5efc1b44acde"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{saldoa30_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="521" y="4" width="58" height="20" uuid="fa86d5f8-63d8-4506-a513-83f7c10ae44e"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{saldoa45_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="579" y="4" width="58" height="20" uuid="b8859466-0daf-4a0b-82af-b45e8aa270a6"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{saldoa60_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="637" y="4" width="55" height="20" uuid="7814aa95-4440-4fd3-87f9-ebd2ba96a1e9"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{saldoa90_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="692" y="4" width="54" height="20" uuid="db63e68d-bce0-448a-98fa-1beae9227dcf"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{saldomas90_2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" x="187" y="4" width="106" height="19" uuid="ae49c48d-1f83-4859-bb6b-2e3a2945047a"/>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL POR VENDEDOR]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="cliente">
+		<groupExpression><![CDATA[$F{idcliente}]]></groupExpression>
+		<groupHeader>
+			<band height="27">
+				<textField>
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="279" height="25" uuid="e257802c-83de-4e6f-9a82-688de5213a1c"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="752" height="108" uuid="093e76df-519e-496a-a508-27149599add0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="10" y="51" width="663" height="27" backcolor="#0E1E6C" uuid="33003812-1bde-44f4-820a-1cffe69f6b13"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<image>
+				<reportElement x="673" y="11" width="69" height="43" uuid="2e054fde-467f-4d88-9f95-2aa6c990634a"/>
+				<imageExpression><![CDATA[$F{img}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="20" y="10" width="481" height="40" uuid="6bb53e65-dd33-4df5-9809-27ed9f6d03e3"/>
+				<textElement>
+					<font fontName="Serif" size="23"/>
+				</textElement>
+				<text><![CDATA[ANÁLISIS DE MOROSIDAD POR VENDEDOR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="54" width="299" height="20" forecolor="#FFFFFF" uuid="47113bc9-7e68-4a17-85c5-bcdf318ff698"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="637" y="78" width="100" height="20" uuid="26ed4578-2e0c-42b4-b42a-b0cca8ddd4a5"/>
+				<textFieldExpression><![CDATA[$P{user}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="545" y="78" width="92" height="20" uuid="b846490a-a417-4982-a771-3feb44c2bec6"/>
+				<text><![CDATA[GENERADO POR:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="4" y="0" width="40" height="25" uuid="f420b6a9-7051-425d-a716-da19e6231277"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="44" y="0" width="87" height="25" uuid="4ab70021-28f9-423e-840b-639ea48b154f"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUMERO DOCUMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="132" y="1" width="52" height="24" uuid="703e1ab2-7b66-40ec-8bf9-48b3982aca41"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA FACTURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="187" y="1" width="53" height="24" uuid="756af159-6071-401e-8652-0e3ca45b13b3"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA VENCE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="291" y="1" width="52" height="24" uuid="cfe17b90-99d5-45da-9fee-9cb7d9ce7749"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="344" y="1" width="54" height="24" uuid="f04a924d-f44a-42e3-b243-18e480930538"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO VENCIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="399" y="1" width="61" height="24" uuid="7c634ee6-5285-4b82-9d0d-8e9211ef3211"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO NO VENCIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="462" y="1" width="58" height="24" uuid="871dde04-4194-469a-a71a-b539c7d64f68"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDOA30]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="521" y="1" width="58" height="24" uuid="5234f9e8-c8cd-4c02-b841-bad1f4173c6f"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDOA45]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="579" y="1" width="58" height="24" uuid="433766bf-8951-465a-9b8b-f53ac12ad46b"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDOA60]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="637" y="1" width="54" height="24" uuid="c2faaf21-a171-4c28-a4fe-d8263449eb24"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDOA90]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="692" y="1" width="54" height="24" uuid="a3fd1e9e-a5f3-4d6f-862a-f7d3dc924e1f"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDOMAS90]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="240" y="0" width="53" height="24" uuid="e530c272-e629-483d-a8a3-838d11c18881"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL FACTURA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="44" y="0" width="87" height="20" uuid="7c25f230-35e5-44da-8cdd-170a4713b215"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numerofactura}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="132" y="0" width="52" height="20" uuid="ca44521b-539f-4fce-a23f-55086cc6f669"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechafactura}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="187" y="0" width="53" height="20" uuid="49cca4e1-0fcf-4125-a044-10c6d0482f93"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_vence}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="291" y="0" width="52" height="20" uuid="5f77a80e-71d7-4566-978f-53d69b859d08"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="344" y="0" width="54" height="20" uuid="a6c741a7-9172-444f-bb04-19f045da13ba"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo_vencido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="399" y="0" width="61" height="20" uuid="f2a2164d-8833-40d3-af94-1212686d5ae3"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo_novencido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="462" y="0" width="58" height="20" uuid="af0a8d36-9bd7-40d4-9fc2-9fb09c392de8"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldoa30}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="521" y="0" width="58" height="20" uuid="2e2e2b84-03e4-4fb2-8664-121daaf15836"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldoa45}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="579" y="0" width="58" height="20" uuid="def04121-8192-42c1-94af-d2e92ad86ea9"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldoa60}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="637" y="0" width="54" height="20" uuid="54e0f1f9-2183-4263-81fe-f54a8e045579"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldoa90}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="692" y="0" width="54" height="20" uuid="19a7a904-216d-4258-ba43-b24bcb1524fd"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldomas90}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="240" y="0" width="53" height="20" uuid="bc030d30-6630-42ce-a1ee-8ec08820a20f"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="3" width="100" height="20" uuid="c87a5d6b-ce7d-42f9-b979-9804116255a8"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="646" y="3" width="100" height="20" uuid="a6330072-c9ec-43f1-8a20-8e64c7037679"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="22" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="293" y="0" width="50" height="20" uuid="6f4e3206-c99c-4e59-8858-308bc832c355"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldo_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="344" y="0" width="54" height="20" uuid="24f97f43-8ca8-413c-a5be-9a72caf288cb"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldo_vencido_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="399" y="0" width="61" height="20" uuid="a43cc622-82fa-4440-a4bd-acfd68fab9ce"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldo_novencido_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="460" y="0" width="60" height="20" uuid="a0810dc2-a753-44d7-a8c2-a7e9bbcf9f04"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldoa30_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="520" y="0" width="59" height="20" uuid="0137caa5-50d5-4075-90f4-e4824b3719d0"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldoa45_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="579" y="0" width="58" height="20" uuid="84d09b4b-1142-4d7b-a0e5-198c85245b87"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldoa60_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="637" y="0" width="54" height="20" uuid="32b390e6-677b-4113-b1ac-b55ec5ab9684"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldoa90_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="692" y="0" width="54" height="20" uuid="c9ef3a17-7760-426a-bf38-10552f2487ea"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldomas90_1}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="206" y="0" width="546" height="1" uuid="81cb5031-1d31-467a-b650-8daacdfabd34"/>
+			</line>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="206" y="1" width="87" height="19" uuid="928be6fa-3d58-426b-9f62-6ad868e1be27"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GRAN TOTAL]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

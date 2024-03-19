@@ -1,0 +1,99 @@
+
+g
+java:S11924"JDefine a constant instead of duplicating this literal "SansSerif" 8 times.(œÕŞõ8µşˆğÈ1
+J
+java:S1604p"(Make this anonymous inner class a lambda(Åûÿ¾øÿÿÿÿ8·şˆğÈ1
+J
+java:S1604|"(Make this anonymous inner class a lambda(‹ıÉ¼üÿÿÿÿ8·şˆğÈ1
+K
+java:S1604ˆ"(Make this anonymous inner class a lambda(…æ©âÿÿÿÿÿ8¸şˆğÈ1
+K
+java:S1604ˆ"(Make this anonymous inner class a lambda(¨í¡§úÿÿÿÿ8¸şˆğÈ1
+3
+java:S1643"Use a StringBuilder instead.(öËÔ
+3
+java:S1643“"Use a StringBuilder instead.(Ò«®¨
+8
+java:S1643–"Use a StringBuilder instead.(øÄµûÿÿÿÿ
+8
+java:S1643™"Use a StringBuilder instead.(×íâºÿÿÿÿÿ
+8
+java:S1643œ"Use a StringBuilder instead.(™ÆéÀşÿÿÿÿ
+2
+java:S1643Ÿ"Use a StringBuilder instead.(÷í¼F
+2
+java:S1643¢"Use a StringBuilder instead.(Æ´É
+8
+java:S1643¥"Use a StringBuilder instead.(ÑµæÀÿÿÿÿÿ
+8
+java:S1643¨"Use a StringBuilder instead.(üÏ”íıÿÿÿÿ
+3
+java:S1643«"Use a StringBuilder instead.(´³€Ú
+?
+java:S1643®"Use a StringBuilder instead.(Ç¼ş‘ùÿÿÿÿ8ºşˆğÈ1
+n	java:S101	"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ƒ‹Áßøÿÿÿÿ8»şˆğÈ1
+p	java:S116"TRename this field "Productos" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜ƒ©;8µ€‰ğÈ1
+u
+java:S1450“"WRemove the "jButton1" field and declare it as a local variable in the relevant methods.(å……¶8¾€‰ğÈ1
+z
+java:S1450”"WRemove the "jButton5" field and declare it as a local variable in the relevant methods.(â¦Î©ûÿÿÿÿ8¿€‰ğÈ1
+u
+java:S1450•"WRemove the "jButton6" field and declare it as a local variable in the relevant methods.(á®İş8ïˆğÈ1
+p
+java:S1450–"YRemove the "jCheckBox1" field and declare it as a local variable in the relevant methods.(×µ„Ò
+r
+java:S1450—"VRemove the "jLabel1" field and declare it as a local variable in the relevant methods.(°ãÉ¸ÿÿÿÿÿ
+s
+java:S1450˜"WRemove the "jLabel10" field and declare it as a local variable in the relevant methods.(¼õò†şÿÿÿÿ
+z
+java:S1450™"WRemove the "jLabel19" field and declare it as a local variable in the relevant methods.(Şù’±ıÿÿÿÿ8Á€‰ğÈ1
+r
+java:S1450š"VRemove the "jLabel2" field and declare it as a local variable in the relevant methods.(™úòˆüÿÿÿÿ
+m
+java:S1450›"VRemove the "jPanel5" field and declare it as a local variable in the relevant methods.(³¡©ú
+l
+java:S1450œ"VRemove the "jPanel6" field and declare it as a local variable in the relevant methods.(í›åv
+m
+java:S1450"VRemove the "jPanel7" field and declare it as a local variable in the relevant methods.(…‘ï°
+w
+java:S1450"[Remove the "jScrollPane1" field and declare it as a local variable in the relevant methods.(¤á×ÿÿÿÿÿ
+F
+java:S1948"$Make "bd" transient or serializable.(ªÁ¡ãşÿÿÿÿ8Ä€‰ğÈ1
+W
+java:S1161C":Add the "@Override" annotation above this method signature(°Èê8Ó€‰ğÈ1
+W
+java:S1161X":Add the "@Override" annotation above this method signature(†ŒË³8Ö€‰ğÈ1
+W
+java:S1161[":Add the "@Override" annotation above this method signature(ö¦óş8×€‰ğÈ1
+H
+java:S1172å"*Remove this unused method parameter "evt".(‚À‡ä8ì€‰ğÈ1
+U
+java:S1135æ"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ8ì€‰ğÈ1
+j	java:S100ò"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Àú²W8î€‰ğÈ1
+o
+java:S3776ò"RRefactor this method to reduce its Cognitive Complexity from 45 to the 15 allowed.(Àú²W8ï€‰ğÈ1
+U
+java:S1135ó"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ8ğ€‰ğÈ1
+T
+java:S2696¶"6Make the enclosing method "static" or remove this set.(ıÇâª8ù€‰ğÈ1
+k	java:S100½"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ãïóø8ú€‰ğÈ1
+H
+java:S1172½"*Remove this unused method parameter "evt".(ãïóø8û€‰ğÈ1
+U
+java:S1135¾"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ8ü€‰ğÈ1
+H
+java:S1172Ã"*Remove this unused method parameter "evt".(è¿é¦8ü€‰ğÈ1
+U
+java:S1135Ä"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ8ı€‰ğÈ1
+M
+java:S1172È"*Remove this unused method parameter "evt".(ø¨Ì¾ûÿÿÿÿ8ş€‰ğÈ1
+U
+java:S1135É"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ8ş€‰ğÈ1
+M
+java:S1197Ğ"*Move the array designators [] to the type.(¡şÏÖøÿÿÿÿ8€‰ğÈ1
+c
+java:S2147ß"ECombine this catch with the one at line 349, which has the same body.(¨¦Š½8€‰ğÈ1
+c
+java:S2147á"ECombine this catch with the one at line 351, which has the same body.(ã€ 8İïˆğÈ1
+b
+java:S2147ã"ECombine this catch with the one at line 353, which has the same body.(ñÎ¯%8İïˆğÈ1

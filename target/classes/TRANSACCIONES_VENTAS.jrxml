@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="354c906a-dd98-4d2d-87a3-b64078b0d8b1">
+	<property name="ireport.zoom" value="1.000000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="producto" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+(SELECT company FROM company WHERE company.id_company =   kardex.cia) AS   company,	
+    (SELECT img FROM company WHERE company.id_company =   kardex.cia) AS   img,
+(SELECT codigo FROM producto WHERE producto.idproducto = kardex.id_producto) AS   codltr,	
+    (SELECT descripcion FROM producto WHERE producto.idproducto = kardex.id_producto) AS   descripcion,
+    fecha,
+    'FACTURA' AS tipo_transaccion,
+    COALESCE((SELECT numerofactura FROM factura WHERE factura.idfactura = kardex.id_documento),'DOC. ELIMINADO') AS documento,
+    COALESCE((SELECT c.nombre from clientes c inner join factura f on f.idcliente=c.idcliente where f.idfactura=kardex.id_documento),'NA') as titular,
+    COALESCE((SELECT costo from detalle_factura where detalle_factura.idfactura=kardex.id_documento and detalle_factura.idproducto=kardex.id_producto),'0.00') as costo,
+    COALESCE((SELECT preciovendido from detalle_factura where detalle_factura.idfactura=kardex.id_documento and detalle_factura.idproducto=kardex.id_producto),'0.00') as precio,
+    saldo_actual,
+    cantidad,
+    saldo_final, 
+    (SELECT USUARIO.USER FROM USUARIO WHERE USUARIO.COD_USER=KARDEX.IDUSUARIO) AS usuario,
+    COALESCE((SELECT observacion FROM factura WHERE factura.idfactura = kardex.id_documento),'DOC. ELIMINADO') AS observacion
+FROM
+    kardex
+WHERE
+    id_producto = $P!{producto} and tipo_documento=2 and cia=$P!{cia}  
+
+UNION
+
+SELECT
+    (SELECT company FROM company WHERE company.id_company =   kardex.cia) AS   company,	
+    (SELECT img FROM company WHERE company.id_company =   kardex.cia) AS   img,
+(SELECT codigo FROM producto WHERE producto.idproducto = kardex.id_producto) AS   codltr,	
+    (SELECT descripcion FROM producto WHERE producto.idproducto = kardex.id_producto) AS   descripcion,
+    fecha,
+    'ANULACION-FACTURA' AS tipo_transaccion,
+    COALESCE((SELECT numerofactura FROM factura WHERE factura.idfactura = kardex.id_documento),'DOC. ELIMINADO') AS documento,
+    COALESCE((SELECT c.nombre from clientes c inner join factura f on f.idcliente=c.idcliente where f.idfactura=kardex.id_documento),'NA') as titular,
+    COALESCE((SELECT costo from detalle_factura where detalle_factura.idfactura=kardex.id_documento and detalle_factura.idproducto=kardex.id_producto),'0.00') as costo,
+    COALESCE((SELECT preciovendido from detalle_factura where detalle_factura.idfactura=kardex.id_documento and detalle_factura.idproducto=kardex.id_producto),'0.00') as precio,
+    saldo_actual,
+    cantidad, 
+    saldo_final, 
+    (SELECT USUARIO.USER FROM USUARIO WHERE USUARIO.COD_USER=KARDEX.IDUSUARIO) AS usuario,
+    COALESCE((SELECT observacion FROM factura WHERE factura.idfactura = kardex.id_documento),'DOC. ELIMINADO') AS observacion
+FROM
+    kardex
+WHERE
+    id_producto = $P!{producto} and tipo_documento=3 and cia=$P!{cia}  
+
+UNION
+
+SELECT
+    (SELECT company FROM company WHERE company.id_company =   kardex.cia) AS   company,	
+    (SELECT img FROM company WHERE company.id_company =   kardex.cia) AS   img,
+(SELECT codigo FROM producto WHERE producto.idproducto = kardex.id_producto) AS   codltr,	
+    (SELECT descripcion FROM producto WHERE producto.idproducto = kardex.id_producto) AS   descripcion,
+    fecha,
+    'NOTA-CREDITO' AS tipo_transaccion,
+    COALESCE((SELECT n_devolucion FROM devoluciones WHERE devoluciones.id_devolucion = kardex.id_documento ),'DOC. ELIMINADO') AS documento,
+    COALESCE((SELECT c.nombre from clientes c inner join factura f on f.idcliente=c.idcliente inner join devoluciones d on d.id_factura=f.idfactura where d.id_devolucion=kardex.id_documento),'NA') as titular,
+    COALESCE((SELECT precio from detalle_devolucion where detalle_devolucion.id_devolucion=kardex.id_documento and detalle_devolucion.id_producto=kardex.id_producto),'0.00') as costo,
+    COALESCE((SELECT precio from detalle_devolucion where detalle_devolucion.id_devolucion=kardex.id_documento and detalle_devolucion.id_producto=kardex.id_producto),'0.00') as precio,
+    saldo_actual,
+    cantidad,
+    saldo_final, 
+    (SELECT USUARIO.USER FROM USUARIO WHERE USUARIO.COD_USER=KARDEX.IDUSUARIO) AS usuario,
+    COALESCE((SELECT observacion FROM devoluciones WHERE devoluciones.id_devolucion = kardex.id_documento),'DOC. ELIMINADO') AS observacion
+FROM
+    kardex
+WHERE
+    id_producto = $P!{producto} and tipo_documento=4 and cia=$P!{cia}  
+UNION
+
+SELECT
+    (SELECT company FROM company WHERE company.id_company =   kardex.cia) AS   company,	
+    (SELECT img FROM company WHERE company.id_company =   kardex.cia) AS   img,
+(SELECT codigo FROM producto WHERE producto.idproducto = kardex.id_producto) AS   codltr,	
+    (SELECT descripcion FROM producto WHERE producto.idproducto = kardex.id_producto) AS   descripcion,
+    fecha,
+    'ANULA-NOTA-CREDITO' AS tipo_transaccion,
+    COALESCE((SELECT n_devolucion FROM devoluciones WHERE devoluciones.id_devolucion = kardex.id_documento ),'DOC. ELIMINADO') AS documento,
+     COALESCE((SELECT c.nombre from clientes c inner join factura f on f.idcliente=c.idcliente inner join devoluciones d on d.id_factura=f.idfactura where d.id_devolucion=kardex.id_documento),'NA') as titular,
+    COALESCE((SELECT precio from detalle_devolucion where detalle_devolucion.id_devolucion=kardex.id_documento and detalle_devolucion.id_producto=kardex.id_producto),'0.00') as costo,
+    COALESCE((SELECT precio from detalle_devolucion where detalle_devolucion.id_devolucion=kardex.id_documento and detalle_devolucion.id_producto=kardex.id_producto),'0.00') as precio,
+    saldo_actual,
+    cantidad,
+    saldo_final, 
+    (SELECT USUARIO.USER FROM USUARIO WHERE USUARIO.COD_USER=KARDEX.IDUSUARIO) AS usuario,
+    COALESCE((SELECT observacion FROM devoluciones WHERE devoluciones.id_devolucion = kardex.id_documento),'DOC. ELIMINADO') AS observacion
+FROM
+    kardex
+WHERE 
+    id_producto = $P!{producto} and tipo_documento=5 and cia=$P!{cia}  
+ 
+ORDER BY fecha;]]>
+	</queryString>
+	<field name="company" class="java.lang.String"/>
+	<field name="img" class="java.io.InputStream"/>
+	<field name="codltr" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="fecha" class="java.time.LocalDateTime"/>
+	<field name="tipo_transaccion" class="java.lang.String"/>
+	<field name="documento" class="java.lang.String"/>
+	<field name="titular" class="java.lang.String"/>
+	<field name="costo" class="java.lang.String"/>
+	<field name="precio" class="java.lang.String"/>
+	<field name="saldo_actual" class="java.math.BigDecimal"/>
+	<field name="cantidad" class="java.math.BigDecimal"/>
+	<field name="saldo_final" class="java.math.BigDecimal"/>
+	<field name="usuario" class="java.lang.String"/>
+	<field name="observacion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="6" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="112" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="1" y="4" width="967" height="105" uuid="9a684826-3c59-4009-9066-af7d77695a6f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="3" y="78" width="965" height="27" backcolor="#0E1E6C" uuid="60b1f311-19aa-4a17-aa48-bff0f0145b8b"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="7" y="11" width="885" height="47" uuid="543d328a-ef9c-43de-b99c-2f70d74fcc1a"/>
+				<textElement>
+					<font fontName="Serif" size="30"/>
+				</textElement>
+				<text><![CDATA[KARDEX DE VENTAS DE PRODUCTO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="7" y="58" width="386" height="20" uuid="93dd5b47-fe0c-4054-b52f-12c535f64800"/>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="892" y="11" width="69" height="43" uuid="81872af1-d409-4fc5-9107-f555320b5a9d"/>
+				<imageExpression><![CDATA[$F{img}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="15" y="82" width="206" height="20" forecolor="#FFFFFF" uuid="e7a619a5-ad74-4b91-b0ca-591a6d020039"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codltr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="82" width="399" height="20" forecolor="#FFFFFF" uuid="8f4417c6-9c27-45bd-b5d1-55b81e3f19d6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle radius="0">
+				<reportElement x="1" y="0" width="967" height="20" uuid="64cd93a1-5c8c-4acd-9ac1-9239e49a6c21"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="0" width="101" height="20" uuid="91775c30-db96-47bf-8ad3-ebf866b52b50"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="0" width="106" height="20" uuid="ff882836-c9b6-433d-ada9-d9511eb4b7a2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO MOVIMIENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="0" width="88" height="20" uuid="91492eff-9f2a-42f2-82de-5cc99c3c6fa5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="0" width="237" height="20" uuid="fc50c267-15b7-4f13-8543-32e58d88ad18"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TITULAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="694" y="0" width="57" height="20" uuid="7b84732a-ef7f-428e-8357-f1410b3b7537"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="594" y="0" width="51" height="20" uuid="85bac051-b445-4c42-8b64-2e0a968f0ca9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[I_ACTUAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="535" y="0" width="58" height="20" uuid="28d94eaf-5138-4042-92d7-40d3b06aed16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="646" y="0" width="48" height="20" uuid="7abc2f77-30f1-4f69-99be-2139d666180d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[I_FINAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="753" y="0" width="66" height="20" uuid="b5cfd277-9eb9-4b73-993a-3e0fef474cd9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[USUARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="819" y="0" width="149" height="20" uuid="48c23a28-8a8b-4861-bf9e-5a68ba19cd18"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBSERVACION]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="42" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="41" width="968" height="1" uuid="88fc0773-ad7f-42f5-911b-c1c2a4c8233d"/>
+			</line>
+			<line>
+				<reportElement x="968" y="0" width="1" height="41" uuid="3a13f880-c5b6-4785-bfa1-ddc9ea62be1f"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="41" uuid="6b1ca926-c6d6-4a09-bf1f-3c97a09c9cb5"/>
+			</line>
+			<textField>
+				<reportElement x="3" y="0" width="101" height="20" uuid="4b8de004-c7fd-4581-8976-2e6c863b8e3a"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="0" width="106" height="20" uuid="b94fc61c-eb7d-420d-b44b-2539373ef498"/>
+				<textFieldExpression><![CDATA[$F{tipo_transaccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="0" width="88" height="20" uuid="b1e0fa85-7d9d-4933-93f0-ec02ef8ea0d9"/>
+				<textFieldExpression><![CDATA[$F{documento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="298" y="0" width="237" height="20" uuid="b1a10d41-30ac-4165-a08b-d97cb9e12260"/>
+				<textFieldExpression><![CDATA[$F{titular}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="694" y="0" width="57" height="20" uuid="329a0138-0c59-41ba-bba3-1530be2da09c"/>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="594" y="0" width="51" height="20" uuid="e8ec0b51-e6c6-455b-b917-e0d95ef4ab96"/>
+				<textFieldExpression><![CDATA[$F{saldo_actual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="535" y="0" width="58" height="20" uuid="72780c38-294c-4169-b6b6-48f11df423ec"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="646" y="0" width="48" height="20" uuid="17b1d09c-9e97-42a1-8e99-d28720120a50"/>
+				<textFieldExpression><![CDATA[$F{saldo_final}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="753" y="0" width="66" height="20" uuid="65e4ce28-197b-434d-b050-401d317b16fb"/>
+				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="819" y="0" width="149" height="41" uuid="091a76a4-0430-4700-a7ce-ba6ab63088ee"/>
+				<textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="16" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="80" height="20" uuid="41932ce6-b27f-4621-9f8b-9740ee5d9d5c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="81" y="0" width="40" height="20" uuid="c003482b-0481-42f9-bcf4-d3cc857c09e0"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="868" y="0" width="100" height="20" uuid="10653e7a-5719-4a80-9187-d17463d94dbc"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

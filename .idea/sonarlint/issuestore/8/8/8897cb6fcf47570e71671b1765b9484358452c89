@@ -1,0 +1,36 @@
+
+D
+java:S1604›"(Make this anonymous inner class a lambda(¨í¡§úÿÿÿÿ
+r
+java:S1104£"VMake escritorio a static final constant or non-public and provide accessors if needed.(Œ–Ú†ıÿÿÿÿ
+L
+java:S1444£"0Make this "public static escritorio" field final(Œ–Ú†ıÿÿÿÿ
+?
+java:S1948"$Make "bd" transient or serializable.(ªÁ¡ãşÿÿÿÿ
+X
+java:S3252("=Use static access with "java.awt.Frame" for "MAXIMIZED_BOTH".(”Æ²¾ùÿÿÿÿ
+P
+java:S2209("5Change this instance-reference to a static reference.(”Æ²¾ùÿÿÿÿ
+P
+java:S2209@"5Change this instance-reference to a static reference.(Šöåàıÿÿÿÿ
+L
+java:S2696N"6Make the enclosing method "static" or remove this set.(åıÒ•
+F
+java:S1197‚"*Move the array designators [] to the type.(¡şÏÖøÿÿÿÿ
+\
+java:S2147‘"ECombine this catch with the one at line 143, which has the same body.(¨¦Š½
+\
+java:S2147“"ECombine this catch with the one at line 145, which has the same body.(ã€ 
+[
+java:S2147•"ECombine this catch with the one at line 147, which has the same body.(ñÎ¯%
+F
+java:S1128"+Remove this unused import 'java.awt.Color'.(ùÈãÈøÿÿÿÿ
+T
+java:S1128
+"9Remove this unused import 'java.awt.image.BufferedImage'.(×íĞ‡şÿÿÿÿ
+?
+java:S1128")Remove this unused import 'java.io.File'.(†Ğ¥Å
+K
+java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ
+H
+java:S1128"2Remove this unused import 'javax.imageio.ImageIO'.(‘çÔû

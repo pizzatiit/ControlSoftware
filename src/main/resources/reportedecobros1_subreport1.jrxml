@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportedecobros1_subreport1" language="groovy" pageWidth="752" pageHeight="572" orientation="Landscape" columnWidth="752" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="19efc0c7-a046-40ac-8112-bc7064371e92">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idrecibo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select da.id as idpago, t.descripcion as metodopago, da.referencia as referencia, b.nombre as banco, da.idrecibo, da.monto as montopago, da.fechadocumento as fechaefectiva from 
+apprecibosdatos da inner join tablas t on t.idgrupo = da.tipo and t.grupo='metodos_de_pago' 
+inner join banco b on b.idbanco = da.idbanco WHERE da.idrecibo=$P{idrecibo}]]>
+	</queryString>
+	<field name="idpago" class="java.lang.Integer"/>
+	<field name="metodopago" class="java.lang.String"/>
+	<field name="referencia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="banco" class="java.lang.String"/>
+	<field name="idrecibo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montopago" class="java.math.BigDecimal"/>
+	<field name="fechaefectiva" class="java.sql.Date"/>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="107" height="20" uuid="c5719192-5d39-4558-b28b-7e984a1e8d27"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[METODO PAGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="0" width="107" height="20" uuid="17b0b4e0-3c93-40e1-a7b1-7bf648268e29"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[BANCO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="214" y="0" width="107" height="20" uuid="b34e9bca-72dd-4b74-b65e-dab81b6fae0c"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[REFERENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="0" width="107" height="20" uuid="3c2700a5-65bd-426a-8082-c83b217c8638"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[MONTO PAGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="0" width="107" height="20" uuid="3653c81e-ccff-489e-a121-27c1e41c3e81"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[FECHA EFECTIVA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="1" width="107" height="20" uuid="3032c260-b5d5-41cd-ac9f-0d21170132d4"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{metodopago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="0" width="107" height="20" uuid="d2119d37-9dff-4a5d-aebd-6e292207cbca"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{banco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="214" y="0" width="107" height="20" uuid="2c505cdc-58e1-4b76-b476-f63667024ca2"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{referencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="321" y="0" width="107" height="20" uuid="80d54ec0-09ce-46d4-97b6-9877af067ae0"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montopago}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="428" y="0" width="107" height="20" uuid="e4a1730c-cc3b-4436-8c20-7d157055a0ac"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaefectiva}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

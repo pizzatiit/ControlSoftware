@@ -1,0 +1,85 @@
+
+`
+java:S1192K"JDefine a constant instead of duplicating this literal "SansSerif" 5 times.(ßíñà
+Q
+java:S1141»"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+>
+java:S1604O"(Make this anonymous inner class a lambda(Ü¼ÒÙ
+D
+java:S1604"(Make this anonymous inner class a lambda(¨í¡§úÿÿÿÿ
+3
+java:S1643¦"Use a StringBuilder instead.(‡ëÅÌ
+3
+java:S1643Ç"Use a StringBuilder instead.(Óİõï
+t
+java:S1488í"]Immediately return this expression instead of assigning it to the temporary variable "icono".(ç¿×‰
+y
+java:S1488õ"]Immediately return this expression instead of assigning it to the temporary variable "icono".(¸¶À†ûÿÿÿÿ
+r
+java:S1450™"VRemove the "jLabel1" field and declare it as a local variable in the relevant methods.(°ãÉ¸ÿÿÿÿÿ
+r
+java:S1450š"VRemove the "jLabel2" field and declare it as a local variable in the relevant methods.(™úòˆüÿÿÿÿ
+r
+java:S1450›"VRemove the "jLabel3" field and declare it as a local variable in the relevant methods.(Îä€øÿÿÿÿ
+m
+java:S1450œ"VRemove the "jLabel4" field and declare it as a local variable in the relevant methods.(«¢•ã
+m
+java:S1450"VRemove the "jLabel5" field and declare it as a local variable in the relevant methods.(ó Ù®
+r
+java:S1450"VRemove the "jPanel1" field and declare it as a local variable in the relevant methods.(´œ½ÿÿÿÿÿ
+r
+java:S1450Ÿ"VRemove the "jPanel2" field and declare it as a local variable in the relevant methods.(õ òçüÿÿÿÿ
+m
+java:S1450 "VRemove the "jPanel3" field and declare it as a local variable in the relevant methods.(Œ³èÈ
+i
+java:S1450¡"RRemove the "log" field and declare it as a local variable in the relevant methods.(ÖÏŠ
+?
+java:S1948""$Make "bd" transient or serializable.(ªÁ¡ãşÿÿÿÿ
+Q	java:S125,"<This block of commented-out lines of code should be removed.(¹Ó’
+U
+java:S1161U":Add the "@Override" annotation above this method signature(óÚ°ùÿÿÿÿ
+U
+java:S1161j":Add the "@Override" annotation above this method signature(óÚ°ùÿÿÿÿ
+U
+java:S1161r":Add the "@Override" annotation above this method signature(óÚ°ùÿÿÿÿ
+N
+java:S1135ù"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+Q
+java:S2209ú"5Change this instance-reference to a static reference.(ŠèŒ‹üÿÿÿÿ
+N
+java:S1135€"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+Q
+java:S2209"5Change this instance-reference to a static reference.(ŠèŒ‹üÿÿÿÿ
+n
+java:S3776”"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(ÎƒŞŒÿÿÿÿÿ
+T
+java:S1854˜"8Remove this useless assignment to local variable "flag".(¼ÏÖ¨ÿÿÿÿÿ
+F
+java:S1172”"*Remove this unused method parameter "evt".(ÎƒŞŒÿÿÿÿÿ
+N
+java:S1135•"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+E
+java:S1481˜")Remove this unused "flag" local variable.(¼ÏÖ¨ÿÿÿÿÿ
+\
+java:S2147å"ECombine this catch with the one at line 362, which has the same body.(Ãôş•
+F	java:S106¡"+Replace this use of System.out by a logger.(Ô°ô€ıÿÿÿÿ
+D
+java:S1481ª"(Remove this unused "val" local variable.(ò¿º€ıÿÿÿÿ
+R
+java:S2696®"6Make the enclosing method "static" or remove this set.(·­°ùÿÿÿÿ
+?	java:S108¹")Either remove or fill this block of code.(şàã‹
+\
+java:S2147Ø"ECombine this catch with the one at line 349, which has the same body.(Ãôş•
+A	java:S106Â"+Replace this use of System.out by a logger.(¯±¡ö
+N
+java:S1135ë"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+Q
+java:S2209ì"5Change this instance-reference to a static reference.(ŠèŒ‹üÿÿÿÿ
+F
+java:S1197ô"*Move the array designators [] to the type.(¡şÏÖøÿÿÿÿ
+\
+java:S2147ƒ"ECombine this catch with the one at line 392, which has the same body.(¨¦Š½
+\
+java:S2147…"ECombine this catch with the one at line 394, which has the same body.(ã€ 
+[
+java:S2147‡"ECombine this catch with the one at line 396, which has the same body.(ñÎ¯%

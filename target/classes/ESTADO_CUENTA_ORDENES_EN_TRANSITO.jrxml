@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ESTADO_DE_CUENTA_PROVEEDOR" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2470d0b8-8d7b-4511-98d1-ca74b94f551e">
+	<property name="ireport.zoom" value="1.0000000000000073"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cliente" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    DENSE_RANK() OVER (ORDER BY F.ID) AS N,
+    F.ID, 
+    F.NFACTURA, 
+    F.FECHA AS FF, 
+    P.PROVEEDOR,
+    CASE 
+        WHEN F.SALDO > 0 THEN DATEDIFF(CURRENT_DATE, F.FECHA)
+        ELSE DATEDIFF(COALESCE(LAST_PAGO.FECHA, F.FECHA),F.FECHA)
+    END AS DIAS_FACTURA,
+    DATEDIFF(COALESCE(R.FECHA, F.FECHA), F.FECHA) AS DIAS_RECIBO,
+    F.VALORFACTURA,
+    F.VALORFLETEMARITIMO,
+    F.GASTOSEXTRA,
+    F.CARGOSDESEGURO,
+    F.FLETEAEREO,
+    F.GTOTAL, 
+    F.SALDO,
+    CASE F.MONEDA WHEN '0' THEN 'DOLAR' WHEN '1' THEN 'LEMPIRAS' END AS MONEDA_FAC,
+    COM.IMG,
+    COM.COMPANY, 
+    
+    R.NABONO, 
+    R.FECHA AS FR,  CASE R.MONEDA WHEN '0' THEN 'DOLAR' WHEN '1' THEN 'LEMPIRAS' END AS MONEDA_REC, 
+    R.MONTO,CASE R.TIPOPAGO WHEN '0' THEN 'FACTURA' WHEN '1' THEN 'FLETE MARITIMO' WHEN '2' THEN 'GASTOS EXTRA' WHEN '3' THEN 'CARGOS DE SEGURO' WHEN '4' THEN 'FLETE AEREO' END AS TIPOPAGO,R.NREFERENCIA
+
+FROM ORDENENTRANSITO F  
+LEFT JOIN ABONOAPEDIDO R ON R.IDFACT = F.ID 
+INNER JOIN COMPANY COM ON COM.ID_COMPANY = F.CIA 
+INNER JOIN PROVEEDOR P ON P.IDPROVEEDOR = F.IDPROVEEDOR 
+ 
+LEFT JOIN (
+    SELECT R.IDFACT, MAX(R.FECHA) AS FECHA
+    FROM ABONOAPEDIDO R 
+    WHERE r.estado!=0
+    GROUP BY R.IDFACT
+) LAST_PAGO ON F.ID = LAST_PAGO.IDFACT
+WHERE F.CIA=$P!{CIA} and f.idproveedor=$P!{cliente};]]>
+	</queryString>
+	<field name="N" class="java.lang.Long"/>
+	<field name="ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NFACTURA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FF" class="java.sql.Date"/>
+	<field name="PROVEEDOR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DIAS_FACTURA" class="java.lang.Integer"/>
+	<field name="DIAS_RECIBO" class="java.lang.Integer"/>
+	<field name="VALORFACTURA" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VALORFLETEMARITIMO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GASTOSEXTRA" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CARGOSDESEGURO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FLETEAEREO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GTOTAL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SALDO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MONEDA_FAC" class="java.lang.String"/>
+	<field name="IMG" class="java.io.InputStream">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMPANY" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NABONO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FR" class="java.sql.Date"/>
+	<field name="MONEDA_REC" class="java.lang.String"/>
+	<field name="MONTO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TIPOPAGO" class="java.lang.String"/>
+	<field name="NREFERENCIA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="contador" class="java.lang.Integer" resetType="Group" resetGroup="FACT" calculation="Count"/>
+	<group name="FACT" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{ID}]]></groupExpression>
+		<groupHeader>
+			<band height="195">
+				<textField>
+					<reportElement x="13" y="23" width="145" height="20" uuid="895a2e2a-0e06-42ac-bc58-e27bb6479be4"/>
+					<textFieldExpression><![CDATA[$F{NFACTURA}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="510" y="23" width="57" height="20" uuid="7c1f09b5-be47-4a00-9d31-785816a20b8f"/>
+					<textFieldExpression><![CDATA[$F{SALDO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="219" y="23" width="71" height="20" uuid="7e206f44-f377-426f-95ee-19f40c9457b2"/>
+					<textFieldExpression><![CDATA[$F{FF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="171" y="23" width="39" height="20" uuid="dd725816-de71-4a29-8aa2-c19624d33a76"/>
+					<textFieldExpression><![CDATA[$F{DIAS_FACTURA}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1" y="23" width="14" height="20" uuid="62fd696e-d12e-4271-ae8e-fa96757a9e9a"/>
+					<textFieldExpression><![CDATA[$F{N}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="174" y="170" width="229" height="1" uuid="eb92fe5d-5570-4c01-ba1a-5e08f129cdd4"/>
+				</line>
+				<line>
+					<reportElement x="173" y="46" width="231" height="1" uuid="83633ba0-efed-4c2e-887b-bc9aa2b450aa"/>
+				</line>
+				<line>
+					<reportElement x="403" y="47" width="1" height="123" uuid="d1468c00-03f5-43bf-bf25-f448a15365bc"/>
+				</line>
+				<staticText>
+					<reportElement x="175" y="46" width="107" height="20" uuid="47841bd4-3b8e-4906-b032-c06d06c8085f"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR FACTURA]]></text>
+				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement x="290" y="110" width="114" height="20" uuid="51bf2a32-da92-439e-8c7f-40e817387a04"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{CARGOSDESEGURO}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="173" y="66" width="231" height="1" uuid="561b202d-4c6b-4c0e-90f1-2d4bd71046a3"/>
+				</line>
+				<line>
+					<reportElement x="173" y="129" width="231" height="1" uuid="4b3181f5-7919-4471-8c0a-e69e0b82a2b0"/>
+				</line>
+				<staticText>
+					<reportElement x="175" y="89" width="107" height="20" uuid="34336015-4f4b-44b5-9c6f-00d49120c91f"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[GASTOS EXTRA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="175" y="151" width="107" height="20" uuid="42833a6a-0170-4d9d-a688-4c5e9f67ec22"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL]]></text>
+				</staticText>
+				<line>
+					<reportElement x="173" y="110" width="231" height="1" uuid="bd58c388-69ea-48c0-8b3a-e4430f0cadc7"/>
+				</line>
+				<line>
+					<reportElement x="173" y="150" width="231" height="1" uuid="55af671a-7a37-4e17-990e-4d3a8c54d0be"/>
+				</line>
+				<textField pattern="#,##0.00">
+					<reportElement x="290" y="46" width="114" height="20" uuid="00f5cf03-ce14-47c2-8b45-a086938a1aaa"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{VALORFACTURA}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="290" y="89" width="114" height="20" uuid="0b9d6e69-9dc7-4ef1-8f75-912b2e9fc15c"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{GASTOSEXTRA}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="290" y="131" width="114" height="20" uuid="98da1cf0-892b-4182-bcbd-f33f16bd7aa5"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{FLETEAEREO}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="173" y="89" width="231" height="1" uuid="ffb88035-a632-4362-bfb7-3e0f334d89d2"/>
+				</line>
+				<line>
+					<reportElement x="284" y="47" width="1" height="123" uuid="a496ca31-bbe7-46b2-97af-06a71359213c"/>
+				</line>
+				<staticText>
+					<reportElement x="175" y="131" width="107" height="20" uuid="f8bb40f9-70d8-4c07-bc62-ea31522b6727"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[FLETE AEREO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="175" y="110" width="110" height="20" uuid="270736ba-3ece-4879-8b8a-0a442333399f"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CARGOS DE SEGURO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="175" y="68" width="107" height="20" uuid="6f57a85c-a760-425b-880d-87753711ec1f"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[FLETE MARITIMO]]></text>
+				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement x="290" y="151" width="114" height="20" uuid="ad135681-29e6-47ec-b42c-39b3e7ac602f"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{GTOTAL}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="290" y="68" width="114" height="20" uuid="4110e0eb-a1d7-452f-b64a-5c227bd59e20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{VALORFLETEMARITIMO}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="173" y="47" width="1" height="123" uuid="c92e2cff-feff-4180-8107-0c68f3763826"/>
+				</line>
+				<staticText>
+					<reportElement x="3" y="173" width="89" height="20" uuid="dd08f5a8-7db5-4e5c-ba12-f68c49724132"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[NUMERO RECIBO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="134" y="173" width="71" height="20" uuid="70bd0067-4a35-4551-9732-af6736afaea9"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[FECHA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="307" y="174" width="79" height="20" uuid="19d1b8a6-98a5-4152-8890-72a7be79e4df"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ABONO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="93" y="173" width="39" height="20" uuid="a25cccb7-2ce1-419e-824d-acaa60730574"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[DIAS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="172" y="3" width="39" height="20" uuid="aa271bbe-4d31-475d-94fe-54e86e440251"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[DIAS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="511" y="3" width="57" height="20" uuid="12ec7fcc-f289-47c0-b9e6-82db5f6363ef"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[SALDO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="3" width="143" height="20" uuid="5bc9e74d-9be2-4c53-a02f-a6f89d98e982"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[FACTURA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="220" y="3" width="71" height="20" uuid="0cf36554-8c83-4cd2-9ffe-a83f830e611d"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[FECHA]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="291" y="23" width="100" height="20" uuid="c11fdecd-8130-4151-b2b1-4ed5097b1e4b"/>
+					<textFieldExpression><![CDATA[$F{MONEDA_FAC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="291" y="3" width="100" height="20" uuid="4b429797-2fac-46b2-b7ed-05bd57dd80f6"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[MONEDA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="206" y="174" width="100" height="20" uuid="be1eecce-255f-46e7-a353-2db0d56f551e"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[MONEDA]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="390" y="23" width="120" height="20" uuid="c47fe3f2-45de-4b1e-866a-777742b2b9da"/>
+					<textFieldExpression><![CDATA[$F{PROVEEDOR}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="390" y="3" width="120" height="20" uuid="952aee02-fabc-48f9-ab99-40f0893be0cd"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PROVEEDOR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="478" y="174" width="94" height="20" uuid="49e48ed2-e054-46ff-8487-5c0bbc83409a"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[REFERENCIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="387" y="174" width="91" height="20" uuid="d2ba621e-5041-44e7-89a0-bee4a908e4c4"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO]]></text>
+				</staticText>
+				<line>
+					<reportElement x="1" y="2" width="569" height="1" uuid="65090917-9c17-47e6-b739-25e54d27c296"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="5">
+				<line>
+					<reportElement x="1" y="2" width="571" height="1" uuid="d5f73127-1f02-47c5-9367-d4963c16f9bd"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="2" y="3" width="570" height="85" uuid="19895902-2382-45cd-bd6a-b575a06f48d0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="51" width="468" height="27" backcolor="#0E1E6C" uuid="93ad6012-082f-46e8-ab8e-409364fbe28b"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="11" y="11" width="487" height="40" uuid="6d898a8c-2276-43cf-a362-e7e184bcd2a5"/>
+				<textElement>
+					<font fontName="Serif" size="23"/>
+				</textElement>
+				<text><![CDATA[SALDOS ORDENES EN TRANSITO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="498" y="11" width="69" height="43" uuid="15eb7fc6-9bde-4059-9451-08343411f69c"/>
+				<imageExpression><![CDATA[$F{IMG}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="11" y="54" width="299" height="20" forecolor="#FFFFFF" uuid="f7b169d8-52ed-4fcc-bef2-215726a61199"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="9" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{MONTO}!=null && $F{MONTO}>0.00]]></printWhenExpression>
+			<textField pattern="#,##0.00">
+				<reportElement x="308" y="1" width="79" height="20" uuid="b8906267-1c3b-4fe8-bc15-f84e26c8ff52">
+					<printWhenExpression><![CDATA[$F{MONTO}!=null && $F{MONTO}>0.00]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{MONTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="0" width="89" height="20" uuid="be7f210d-1ee7-4e94-bc5e-8c62b88a37ad">
+					<printWhenExpression><![CDATA[$F{MONTO}!=null && $F{MONTO}>0.00]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{NABONO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="134" y="1" width="71" height="20" uuid="866256a6-9ffe-4e7e-9586-c6241724f00b">
+					<printWhenExpression><![CDATA[$F{MONTO}!=null && $F{MONTO}>0.00]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{FR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="1" width="39" height="20" uuid="db17f799-098a-4c53-9661-bd131b9d3ebc">
+					<printWhenExpression><![CDATA[$F{MONTO}!=null && $F{MONTO}>0.00]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{DIAS_RECIBO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="206" y="1" width="100" height="20" uuid="aa5c43c0-af14-4276-a40e-5840443cde18">
+					<printWhenExpression><![CDATA[$F{MONTO}!=null && $F{MONTO}>0.00]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{MONEDA_REC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="478" y="1" width="93" height="20" uuid="ee771118-bb3b-4943-b2e0-d924e989fd5e">
+					<printWhenExpression><![CDATA[$F{MONTO}!=null && $F{MONTO}>0.00]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{NREFERENCIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="387" y="1" width="91" height="20" uuid="38200cae-3d20-4ed8-bee6-e44beeaf3cd2"/>
+				<textFieldExpression><![CDATA[$F{TIPOPAGO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="16" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="5" y="3" width="100" height="20" uuid="ad88f2ca-c4cb-4289-8354-ca0793af3928"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="461" y="3" width="100" height="20" uuid="1ff7a3df-1ec1-45d5-aa4b-a4c7ff193583"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

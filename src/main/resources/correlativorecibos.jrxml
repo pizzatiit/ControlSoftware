@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="41c0d240-f01e-43d6-9e37-99ba428b7ceb">
+	<property name="ireport.zoom" value="1.1"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dfecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hfecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dnumero" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hnumero" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pf" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pn" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select r.numero_recibo, r.fecha,r.total, c.nombre,case r.estado when '1' then 'Activo' when '0' then 'Nulo' end as estado, co.img, co.company,if( (r.numero_recibo - LAG(r.numero_recibo) OVER (ORDER BY numero_recibo asc))>1,CONCAT(LAG(r.numero_recibo) OVER (ORDER BY numero_recibo ASC) + 1,"-", r.numero_recibo-1),"0") as rango from recibopago r inner join clientes c on c.idcliente=r.idcliente inner join company co on co.id_company=r.cia where r.cia=$P{cia} AND R.TIPO=0 and (r.fecha between $P{dfecha} and $P{hfecha})  and CAST(r.numero_recibo AS UNSIGNED) between $P{dnumero} and $P{hnumero} order by numero_recibo asc]]>
+	</queryString>
+	<field name="numero_recibo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estado" class="java.lang.String"/>
+	<field name="img" class="java.io.InputStream">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="company" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rango" class="java.lang.String"/>
+	<variable name="numero_recibo_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{numero_recibo}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="106" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="570" height="104" uuid="3b383f7e-ce91-4946-9e2a-5de7a2d16852"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="51" width="468" height="27" backcolor="#0E1E6C" uuid="3043e34c-983b-47b6-acfe-06fee0f1a41d"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="10" width="481" height="40" uuid="9f0f87b9-3696-4737-b96b-5d83d7cbeb93"/>
+				<textElement>
+					<font fontName="Serif" size="23"/>
+				</textElement>
+				<text><![CDATA[CORRELATIVO DE RECIBOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="54" width="299" height="20" forecolor="#FFFFFF" uuid="03ac08db-5a82-42fb-b0a5-e8f72f73059d"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="491" y="10" width="69" height="43" uuid="74aaf105-2cc0-4464-abda-46380fc67800"/>
+				<imageExpression><![CDATA[$F{img}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="383" y="78" width="28" height="20" forecolor="#000000" uuid="ca33b5e5-3ad4-4902-993d-a580fcb2052f">
+					<printWhenExpression><![CDATA[$P{pf}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="496" y="78" width="60" height="20" forecolor="#000000" uuid="5187b120-bf25-426f-93f5-93e22b6e3710">
+					<printWhenExpression><![CDATA[$P{pf}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hfecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="411" y="78" width="60" height="20" forecolor="#000000" uuid="a8836f22-6958-413c-a8e6-27204ce7e2ce">
+					<printWhenExpression><![CDATA[$P{pf}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dfecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="472" y="78" width="17" height="20" forecolor="#000000" uuid="48ac524f-d9b1-4195-b068-314bf209dfb3">
+					<printWhenExpression><![CDATA[$P{pf}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[AL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="37" y="78" width="72" height="20" forecolor="#000000" uuid="34b31952-0a82-4960-9f69-d0b999adeeef">
+					<printWhenExpression><![CDATA[$P{pn}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dnumero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="78" width="28" height="20" forecolor="#000000" uuid="87986f5d-88f7-4a05-a3c9-92755faf6800">
+					<printWhenExpression><![CDATA[$P{pn}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="127" y="78" width="72" height="20" forecolor="#000000" uuid="567b8495-b5e7-4791-9188-3e6459a1ef30">
+					<printWhenExpression><![CDATA[$P{pn}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hnumero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="109" y="78" width="17" height="20" forecolor="#000000" uuid="e32373a7-c8d2-4340-911b-7309e23bc56b">
+					<printWhenExpression><![CDATA[$P{pn}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[AL:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="87" height="20" uuid="c75fdce6-8ecd-4147-92cb-2975019fd960"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUMERO RECIBO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="0" width="79" height="20" uuid="f5a970c1-fde1-4107-aff2-a359de4645c2"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="0" width="226" height="20" uuid="d8209394-db28-421b-9bbc-0342b688c8d4"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="0" width="87" height="20" uuid="3bb1f654-108e-4cf9-a3de-6d44fa16aa68"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="526" y="0" width="44" height="20" uuid="da5e3e78-879c-41de-8dab-8f211989ddc1"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FALTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="0" width="43" height="20" uuid="637d215d-66db-49fa-bd91-41dc50fed130"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="87" height="20" uuid="9eb7b296-2d09-4e04-8557-9c15cfdad939"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{numero_recibo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="88" y="0" width="79" height="20" uuid="32a1e0f9-bd5e-4641-abb8-cc730257a914"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="168" y="0" width="226" height="20" uuid="9c855b27-8582-45a5-93ae-d69fde83090c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="1" width="87" height="20" uuid="c27ec9bd-5942-42f1-8e38-2dc83d2129e7"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="526" y="1" width="44" height="20" uuid="cc73c0a4-404f-499c-9019-f133cd0660f4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{rango}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="482" y="1" width="43" height="20" uuid="0d666e4a-0f0b-4a98-a934-f4a356892a5d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="5" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="c17a1fc3-4bb6-4949-89bc-13f6a455663b"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="470" y="0" width="100" height="20" uuid="3e45ebfe-f871-4a9f-86b7-a4d4d51084fb"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

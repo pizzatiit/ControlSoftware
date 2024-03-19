@@ -1,0 +1,92 @@
+
+f
+java:S1192"KDefine a constant instead of duplicating this literal " and cia=" 30 times.(óÏ”ˆüÿÿÿÿ
+g
+java:S1192„"KDefine a constant instead of duplicating this literal "SansSerif" 29 times.(ƒá÷ªşÿÿÿÿ
+D
+java:S1604ˆ"(Make this anonymous inner class a lambda(…æ©âÿÿÿÿÿ
+D
+java:S1604‰"(Make this anonymous inner class a lambda(¨í¡§úÿÿÿÿ
+g	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ñÜ£¸üÿÿÿÿ
+n
+java:S1450š"WRemove the "jButton1" field and declare it as a local variable in the relevant methods.(å……¶
+n
+java:S1450›"WRemove the "jButton2" field and declare it as a local variable in the relevant methods.(¤½ÃÜ
+r
+java:S1450œ"VRemove the "jLabel1" field and declare it as a local variable in the relevant methods.(°ãÉ¸ÿÿÿÿÿ
+s
+java:S1450"WRemove the "jLabel10" field and declare it as a local variable in the relevant methods.(¼õò†şÿÿÿÿ
+s
+java:S1450"WRemove the "jLabel11" field and declare it as a local variable in the relevant methods.(‰Ó‚©øÿÿÿÿ
+n
+java:S1450Ÿ"WRemove the "jLabel12" field and declare it as a local variable in the relevant methods.(¶“¡
+s
+java:S1450 "WRemove the "jLabel13" field and declare it as a local variable in the relevant methods.(ÑİĞİıÿÿÿÿ
+s
+java:S1450¡"WRemove the "jLabel14" field and declare it as a local variable in the relevant methods.(ÖóœÍıÿÿÿÿ
+s
+java:S1450¢"WRemove the "jLabel15" field and declare it as a local variable in the relevant methods.(³şâçøÿÿÿÿ
+s
+java:S1450£"WRemove the "jLabel16" field and declare it as a local variable in the relevant methods.(š¼ª¯üÿÿÿÿ
+n
+java:S1450¤"WRemove the "jLabel17" field and declare it as a local variable in the relevant methods.(„Ç›Ä
+m
+java:S1450¥"WRemove the "jLabel18" field and declare it as a local variable in the relevant methods.(†«=
+s
+java:S1450¦"WRemove the "jLabel19" field and declare it as a local variable in the relevant methods.(Şù’±ıÿÿÿÿ
+r
+java:S1450§"VRemove the "jLabel2" field and declare it as a local variable in the relevant methods.(™úòˆüÿÿÿÿ
+s
+java:S1450¨"WRemove the "jLabel20" field and declare it as a local variable in the relevant methods.(ëƒß›úÿÿÿÿ
+s
+java:S1450©"WRemove the "jLabel21" field and declare it as a local variable in the relevant methods.(Üœäÿûÿÿÿÿ
+s
+java:S1450ª"WRemove the "jLabel22" field and declare it as a local variable in the relevant methods.(šíŒÒúÿÿÿÿ
+n
+java:S1450«"WRemove the "jLabel23" field and declare it as a local variable in the relevant methods.(õöäò
+s
+java:S1450¬"WRemove the "jLabel24" field and declare it as a local variable in the relevant methods.(¢×µæúÿÿÿÿ
+s
+java:S1450­"WRemove the "jLabel25" field and declare it as a local variable in the relevant methods.(ÍóÙ°şÿÿÿÿ
+s
+java:S1450®"WRemove the "jLabel26" field and declare it as a local variable in the relevant methods.(ÄšÔÃıÿÿÿÿ
+n
+java:S1450¯"WRemove the "jLabel28" field and declare it as a local variable in the relevant methods.(ŒÄöı
+s
+java:S1450°"WRemove the "jLabel29" field and declare it as a local variable in the relevant methods.(ùôÜ®şÿÿÿÿ
+r
+java:S1450±"VRemove the "jLabel3" field and declare it as a local variable in the relevant methods.(Îä€øÿÿÿÿ
+m
+java:S1450²"VRemove the "jLabel4" field and declare it as a local variable in the relevant methods.(«¢•ã
+m
+java:S1450³"VRemove the "jLabel5" field and declare it as a local variable in the relevant methods.(ó Ù®
+r
+java:S1450´"VRemove the "jLabel6" field and declare it as a local variable in the relevant methods.(¸ôÂøÿÿÿÿ
+m
+java:S1450µ"VRemove the "jLabel7" field and declare it as a local variable in the relevant methods.(×ê˜Ÿ
+m
+java:S1450¶"VRemove the "jLabel8" field and declare it as a local variable in the relevant methods.(å»«¢
+r
+java:S1450·"VRemove the "jLabel9" field and declare it as a local variable in the relevant methods.(Ì’óĞşÿÿÿÿ
+r
+java:S1450¸"VRemove the "jPanel1" field and declare it as a local variable in the relevant methods.(´œ½ÿÿÿÿÿ
+n
+java:S1450¹"WRemove the "jPanel15" field and declare it as a local variable in the relevant methods.(óñï
+r
+java:S1450º"VRemove the "jPanel2" field and declare it as a local variable in the relevant methods.(õ òçüÿÿÿÿ
+w
+java:S1450»"[Remove the "jScrollPane1" field and declare it as a local variable in the relevant methods.(¤á×ÿÿÿÿÿ
+?
+java:S1948"$Make "bd" transient or serializable.(ªÁ¡ãşÿÿÿÿ
+A
+java:S1172è"*Remove this unused method parameter "evt".(‚À‡ä
+N
+java:S1135é"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1197ğ"*Move the array designators [] to the type.(¡şÏÖøÿÿÿÿ
+\
+java:S2147ÿ"ECombine this catch with the one at line 637, which has the same body.(¨¦Š½
+\
+java:S2147"ECombine this catch with the one at line 639, which has the same body.(ã€ 
+[
+java:S2147ƒ"ECombine this catch with the one at line 641, which has the same body.(ñÎ¯%

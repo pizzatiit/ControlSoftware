@@ -1,0 +1,212 @@
+
+d
+java:S1192¬"HDefine a constant instead of duplicating this literal "factura" 3 times.( ®ˆÿÿÿÿÿ
+f
+java:S1192ä"JDefine a constant instead of duplicating this literal "FACTURADA" 3 times.(ÕäÏóùÿÿÿÿ
+z
+java:S1192¶"^Define a constant instead of duplicating this literal "Error al generar el reporte: " 3 times.(ÍŞş¼ıÿÿÿÿ
+w
+java:S1192á"[Define a constant instead of duplicating this literal "Ninguna fila seleccionada!" 4 times.(Œ·Æèúÿÿÿÿ
+s
+java:S1192»"WDefine a constant instead of duplicating this literal " and usuario.cod_user=" 4 times.(ƒ£†Çşÿÿÿÿ
+g
+java:S1192û"KDefine a constant instead of duplicating this literal " and cia=" 12 times.(…•Şßøÿÿÿÿ
+é
+java:S1192»"ÌDefine a constant instead of duplicating this literal "select * from role_usuario inner join role on role.id=role_usuario.roleid inner join usuario on usuario.cod_user=role_usuario.usuarioid inner join role_permiso on role_permiso.roleid=role.id inner join permisos on permisos.id=role_permiso.permisoid where permisos.id=" 4 times.(ƒ£†Çşÿÿÿÿ
+f
+java:S1192"KDefine a constant instead of duplicating this literal "SansSerif" 23 times.(¢£Êÿÿÿÿÿ
+s
+java:S1192»"WDefine a constant instead of duplicating this literal " and role_usuario.cia=" 4 times.(ƒ£†Çşÿÿÿÿ
+ı
+java:S1192,"ßDefine a constant instead of duplicating this literal "select op.idorden as ID, op.numero_orden as N_ORDEN, c.nombre as CLIENTE, v.vendedor as VENDEDOR, CASE op.condicionpago WHEN '1' THEN 'CONTADO' WHEN '0' THEN 'CREDITO' END as METODO_PAGO, CASE op.tipo WHEN '1' THEN 'ORIGINAL' WHEN '0' THEN 'CP' END as TIPOPEDIDO, op.fechaorden as FECHA_ORDEN, op.fechaingreso as FECHA_INGRESO,  op.total as TOTAL, CASE op.estado WHEN '1' THEN 'INGRESADA' WHEN '2' THEN 'FACTURADA' WHEN '0' THEN 'ANULADA' WHEN '3' THEN 'CHEQUEADO-BODEGA' END AS ESTADO, op.nombrereferencia as NOMBRE_PEDIDO from orden_de_pedido as op inner join clientes as c on c.idcliente=op.idcliente inner join vendedor v on op.idvendedor=v.id_vendedor where op.cia=" 7 times.(Î€æÃ8“÷ÀÚÍ1
+t
+java:S1192,"WDefine a constant instead of duplicating this literal " order by idorden desc" 7 times.(Î€æÃ8œ÷ÀÚÍ1
+Q
+java:S1141Ê"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+g	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ì‘ı‹
+g	java:S117ó"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÊë‰
+g	java:S117«"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÊë‰
+l	java:S117¶"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“ßÁÖıÿÿÿÿ
+l	java:S117º"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤ï¨Îıÿÿÿÿ
+D
+java:S1604Æ"(Make this anonymous inner class a lambda(‹ıÉ¼üÿÿÿÿ
+D
+java:S1604Ò"(Make this anonymous inner class a lambda(Åûÿ¾øÿÿÿÿ
+D
+java:S1604Ş"(Make this anonymous inner class a lambda(ŒÁÃÒùÿÿÿÿ
+D
+java:S1604ê"(Make this anonymous inner class a lambda(üåêøÿÿÿÿ
+D
+java:S1604ö"(Make this anonymous inner class a lambda(ÕÜÜ«ûÿÿÿÿ
+>
+java:S1604‚"(Make this anonymous inner class a lambda(¥Šîj
+?
+java:S1604"(Make this anonymous inner class a lambda(ÿóÎ×
+D
+java:S1604š"(Make this anonymous inner class a lambda(…æ©âÿÿÿÿÿ
+D
+java:S1604‡"(Make this anonymous inner class a lambda(¨í¡§úÿÿÿÿ
+g	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(”ùòÿúÿÿÿÿ
+Z
+java:S2259 "CA "NullPointerException" could be thrown; "date2" is nullable here.(—ÑŒâ
+i	java:S116"TRename this field "Productos" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜ƒ©;
+w
+java:S1450"[Remove the "buttonGroup1" field and declare it as a local variable in the relevant methods.(ïÔúØÿÿÿÿÿ
+n
+java:S1450—"WRemove the "jButton2" field and declare it as a local variable in the relevant methods.(¤½ÃÜ
+s
+java:S1450˜"WRemove the "jButton3" field and declare it as a local variable in the relevant methods.(ĞäğËıÿÿÿÿ
+s
+java:S1450™"WRemove the "jButton4" field and declare it as a local variable in the relevant methods.(€„ˆÎÿÿÿÿÿ
+s
+java:S1450š"WRemove the "jButton5" field and declare it as a local variable in the relevant methods.(â¦Î©ûÿÿÿÿ
+n
+java:S1450›"WRemove the "jButton6" field and declare it as a local variable in the relevant methods.(á®İş
+n
+java:S1450œ"WRemove the "jButton7" field and declare it as a local variable in the relevant methods.(İöÏÒ
+n
+java:S1450"WRemove the "jButton8" field and declare it as a local variable in the relevant methods.(ç™Ôô
+s
+java:S1450"WRemove the "jLabel10" field and declare it as a local variable in the relevant methods.(¼õò†şÿÿÿÿ
+s
+java:S1450Ÿ"WRemove the "jLabel19" field and declare it as a local variable in the relevant methods.(Şù’±ıÿÿÿÿ
+r
+java:S1450 "VRemove the "jLabel2" field and declare it as a local variable in the relevant methods.(™úòˆüÿÿÿÿ
+r
+java:S1450¡"VRemove the "jLabel3" field and declare it as a local variable in the relevant methods.(Îä€øÿÿÿÿ
+m
+java:S1450¢"VRemove the "jLabel4" field and declare it as a local variable in the relevant methods.(«¢•ã
+m
+java:S1450£"VRemove the "jLabel5" field and declare it as a local variable in the relevant methods.(ó Ù®
+r
+java:S1450¤"VRemove the "jPanel1" field and declare it as a local variable in the relevant methods.(´œ½ÿÿÿÿÿ
+r
+java:S1450¥"VRemove the "jPanel2" field and declare it as a local variable in the relevant methods.(õ òçüÿÿÿÿ
+m
+java:S1450¦"VRemove the "jPanel3" field and declare it as a local variable in the relevant methods.(Œ³èÈ
+r
+java:S1450§"VRemove the "jPanel4" field and declare it as a local variable in the relevant methods.(§É†¬şÿÿÿÿ
+m
+java:S1450¨"VRemove the "jPanel5" field and declare it as a local variable in the relevant methods.(³¡©ú
+l
+java:S1450©"VRemove the "jPanel6" field and declare it as a local variable in the relevant methods.(í›åv
+m
+java:S1450ª"VRemove the "jPanel7" field and declare it as a local variable in the relevant methods.(…‘ï°
+w
+java:S1450«"[Remove the "jScrollPane1" field and declare it as a local variable in the relevant methods.(¤á×ÿÿÿÿÿ
+?
+java:S1948""$Make "bd" transient or serializable.(ªÁ¡ãşÿÿÿÿ
+V
+java:S1161¢":Add the "@Override" annotation above this method signature(ŠÖô„øÿÿÿÿ
+V
+java:S1161¥":Add the "@Override" annotation above this method signature(Õş°ıüÿÿÿÿ
+V
+java:S1161¯":Add the "@Override" annotation above this method signature(ŠÖô„øÿÿÿÿ
+V
+java:S1161²":Add the "@Override" annotation above this method signature(Õş°ıüÿÿÿÿ
+Q
+java:S1161¤":Add the "@Override" annotation above this method signature(°Èê
+Q
+java:S1161¸":Add the "@Override" annotation above this method signature(†ŒË³
+V
+java:S1161½":Add the "@Override" annotation above this method signature(ŠÖô„øÿÿÿÿ
+i
+java:S3776‹"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚À‡ä
+A
+java:S1172‹"*Remove this unused method parameter "evt".(‚À‡ä
+@
+java:S1940—")Use the opposite operator ("!=") instead.(âñäî
+@
+java:S1940—")Use the opposite operator ("!=") instead.(âñäî
+F
+java:S2200˜"/Only the sign of the result should be examined.(—ÑŒâ
+m
+java:S2159Ÿ"VRemove this call to "equals"; comparisons between unrelated types always return false.(ßú
+m
+java:S2159Ÿ"VRemove this call to "equals"; comparisons between unrelated types always return false.(ßú
+F
+java:S2200 "/Only the sign of the result should be examined.(—ÑŒâ
+?	java:S108«")Either remove or fill this block of code.(”ı¾
+d	java:S100¯"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ¦¢ê
+A
+java:S1172¯"*Remove this unused method parameter "evt".(İ¦¢ê
+N
+java:S1135°"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+c	java:S100³"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Àú²W
+@
+java:S1172³"*Remove this unused method parameter "evt".(Àú²W
+N
+java:S1135´"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172¸"*Remove this unused method parameter "evt".(¹¾ûüÿÿÿÿ
+N
+java:S1135¹"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+N
+java:S1135Ê"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172Ñ"*Remove this unused method parameter "evt".(éûùÿÿÿÿÿ
+N
+java:S1135Ò"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+M
+java:S1172Ö"*Remove this unused method parameter "evt".(¨ ºìÿÿÿÿÿ8ó‚ÁÚÍ1
+N
+java:S1135×"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172Ú"*Remove this unused method parameter "evt".(¤ê…ëÿÿÿÿÿ
+N
+java:S1135Û"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+A
+java:S1172Ş"*Remove this unused method parameter "evt".(™ÃŠñ
+N
+java:S1135ß"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+>
+java:S1125ï"'Remove the unnecessary boolean literal.(ñû­¦
+?	java:S108ƒ")Either remove or fill this block of code.(”ı¾
+A
+java:S1172ˆ"*Remove this unused method parameter "evt".(è¿é¦
+N
+java:S1135‰"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+F
+java:S1172”"*Remove this unused method parameter "evt".(ø¨Ì¾ûÿÿÿÿ
+N
+java:S1135•"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+]
+java:S1075§"ARefactor your code to get this URI from a customizable parameter.(æ¹óışÿÿÿÿ
+F	java:S106¶"+Replace this use of System.out by a logger.(ÍŞş¼ıÿÿÿÿ
+]
+java:S1075¿"ARefactor your code to get this URI from a customizable parameter.(’÷…¦ûÿÿÿÿ
+F	java:S106Î"+Replace this use of System.out by a logger.(ÍŞş¼ıÿÿÿÿ
+@
+java:S1172Õ"*Remove this unused method parameter "evt".(Š–ÿG
+N
+java:S1135Ö"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+2
+java:S3626"Remove this redundant jump.(ûÁİ…
+A
+java:S1172ó"*Remove this unused method parameter "evt".(¡àÍ…
+N
+java:S1135ô"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+?	java:S108")Either remove or fill this block of code.(”ı¾
+A
+java:S1172”"*Remove this unused method parameter "evt".(Üæ¦‚
+U
+java:S1135•"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ8â‰–ğÈ1
+>
+java:S1125¦"'Remove the unnecessary boolean literal.(ñû­¦
+F
+java:S1197º"*Move the array designators [] to the type.(¤ï¨Îıÿÿÿÿ
+A	java:S106¼"+Replace this use of System.out by a logger.(ê”¼Ş
+]
+java:S1075Í"ARefactor your code to get this URI from a customizable parameter.(É˜ã‹ùÿÿÿÿ
+F	java:S106Û"+Replace this use of System.out by a logger.(ÍŞş¼ıÿÿÿÿ
+?	java:S108à")Either remove or fill this block of code.(”ı¾
+F
+java:S1197ç"*Move the array designators [] to the type.(¡şÏÖøÿÿÿÿ
+\
+java:S2147ö"ECombine this catch with the one at line 884, which has the same body.(¨¦Š½
+\
+java:S2147ø"ECombine this catch with the one at line 886, which has the same body.(ã€ 
+[
+java:S2147ú"ECombine this catch with the one at line 888, which has the same body.(ñÎ¯%
+d
+java:S1128"IRemove this unused import 'javax.swing.WindowConstants.DISPOSE_ON_CLOSE'.(ä‘ò­üÿÿÿÿ
