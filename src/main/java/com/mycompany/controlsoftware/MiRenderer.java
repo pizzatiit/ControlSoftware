@@ -10,7 +10,7 @@ import javax.swing.table.JTableHeader;
 public class MiRenderer extends DefaultTableCellRenderer {
 
     public enum ColoresEstado{
-        INGRESADA(Color.GREEN,Color.BLACK),
+        INGRESADA(Color.YELLOW,Color.BLACK),
         DESPACHADA(Color.BLUE,Color.BLACK),
         ABONADA(Color.ORANGE,Color.BLACK),
         ANULADA(Color.RED,Color.BLACK);
@@ -54,26 +54,10 @@ public class MiRenderer extends DefaultTableCellRenderer {
             if(c.toString().equals(estado)){
                 setBackground(c.b);
                 setForeground(c.f);              
+                break;
             }
-        }
-        
-        
-    /*    if (estado.equals("INGRESADA")) {
-            setBackground(Color.YELLOW);
-            setForeground(Color.BLACK);
-        } else if (estado.equals("DESPACHADA")) {
-            setBackground(Color.BLUE);
-            setForeground(Color.BLACK);
-        } else if (estado.equals("ABONADA")) {
-            setBackground(Color.ORANGE);
-            setForeground(Color.BLACK);
-        } else if (estado.equals("PAGADA")) {
-            setBackground(Color.GREEN);
-            setForeground(Color.BLACK);
-        } else if (estado.equals("ANULADA")) {
-            setBackground(Color.RED);
-            setForeground(Color.BLACK);
-        }*/
+        }   
+
         return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     }
 }
