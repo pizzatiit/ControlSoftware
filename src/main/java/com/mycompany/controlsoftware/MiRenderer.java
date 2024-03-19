@@ -9,6 +9,28 @@ import javax.swing.table.JTableHeader;
 
 public class MiRenderer extends DefaultTableCellRenderer {
 
+    public enum ColoresEstado{
+        INGRESADA(Color.GREEN,Color.BLACK),
+        DESPACHADA(Color.BLUE,Color.BLACK),
+        ABONADA(Color.ORANGE,Color.BLACK),
+        ANULADA(Color.RED,Color.BLACK);
+        private final Color b;
+        private final Color f;
+        
+        private ColoresEstado(Color back, Color front){
+            this.b = back;
+            this.f = front;
+        }
+        
+        public Color getB(){
+            return this.b;
+        }
+        
+        public Color getF(){
+            return this.f;
+        }
+    }
+    
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected,
@@ -27,7 +49,16 @@ public class MiRenderer extends DefaultTableCellRenderer {
         }
 
         String estado = (String) table.getValueAt(row, 10);
-        if (estado.equals("INGRESADA")) {
+        
+        for(ColoresEstado c:ColoresEstado.values()){
+            if(c.toString().equals(estado)){
+                setBackground(c.b);
+                setForeground(c.f);              
+            }
+        }
+        
+        
+    /*    if (estado.equals("INGRESADA")) {
             setBackground(Color.YELLOW);
             setForeground(Color.BLACK);
         } else if (estado.equals("DESPACHADA")) {
@@ -42,7 +73,7 @@ public class MiRenderer extends DefaultTableCellRenderer {
         } else if (estado.equals("ANULADA")) {
             setBackground(Color.RED);
             setForeground(Color.BLACK);
-        }
+        }*/
         return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     }
 }
